@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 20.6.29) (preloaded format=xelatex 2020.7.10)  21 JUL 2020 13:30
+This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 20.6.29) (preloaded format=xelatex 2020.7.10)  21 JUL 2020 20:00
 entering extended mode
 **./10EconometricTheorems.tex
 (10EconometricTheorems.tex
@@ -1552,30 +1552,39 @@ le (type pdf)
 
 ]
 Chapter 7.
-[41] [42
+[41] [42] [43]
 
-]
+Package natbib Warning: Citation `KinTomWit00' on page 44 undefined on input li
+ne 1471.
+
+[44]
 Chapter 8.
-[43] [44] [45] [46] [47]
-Underfull \hbox (badness 1005) in paragraph at lines 1607--1608
+[45
+
+] [46] [47] [48] [49]
+Underfull \hbox (badness 1005) in paragraph at lines 1750--1751
 []\TU/qpl/b/n/10 This follows from two features. First, $[][][][][][][][][] [][
 ][] [] [][][][][][][][][]$. Second, it is clear that
  []
 
-[48]
+[50]
 Chapter 9.
 \openout6 = `bu.aux'.
 
-(10EconometricTheorems.bbl [49
+(10EconometricTheorems.bbl [51
 
-] [50
+] [52
 
-]) [51]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1616.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1616.
+])
+
+Package natbib Warning: There were undefined citations.
+
+[53]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1759.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1759.
 (10EconometricTheorems.aux (bu.aux))
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1616.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1616.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1759.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1759.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -1587,12 +1596,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 35658 strings out of 416041
- 650092 string characters out of 2927676
- 1137679 words of memory out of 3000000
- 52592 multiletter control sequences out of 15000+200000
+ 35676 strings out of 416041
+ 650344 string characters out of 2927676
+ 1139036 words of memory out of 3000000
+ 52610 multiletter control sequences out of 15000+200000
  539758 words of font info for 84 fonts, out of 3000000 for 9000
  0 hyphenation exceptions out of 8191
  68i,18n,118p,856b,481s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on 10EconometricTheorems.pdf (51 pages).
+Output written on 10EconometricTheorems.pdf (53 pages).

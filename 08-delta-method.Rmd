@@ -1,5 +1,147 @@
 # Delta Method {#dm}
 
-# Delta Method in Plain English 
+## Delta Method in Plain English 
 
-The Delta Method, rather confusingly, is a 
+The Delta Method (DM) states that we can approximate the asymptotic behaviour of functions over a random variable, if the random variable is itself asymptotically normal. In practice, this theorem tells us that even if we do not know the expected value and variance of the function $g(X)$ we can still approximate it reasonably. Note that by [Central Limit Theorem](#clt) we know that several important random variables and estimators are asymptotically normal, including the sample mean. We can therefore approximate the mean and variance of some transformation of the sample mean using its variance.
+
+More specifically, suppose that we have some sequence of random variables $X_n$, such that as $n\to\infty$
+
+$$
+X_n \sim N(\mu,\frac{\sigma^2}{n}).
+$$
+
+We can rearrange this statement, to capture that the difference between the random variable and some constant $\mu$ converges to a normal distribution around zero, with a variance determined by the number of observations:[^fn_parallel]
+
+[^fn_parallel]:
+   There are clear parallels here to how we expressed [estimator consistency]({#estimator_consistency} in the previous chapter).
+
+$$
+(X_n - \mu) \sim N(0, \frac{\sigma^2}{n}).
+$$
+
+
+Further rearrangement yields
+
+$$
+\begin{aligned}
+(X_n - \mu) &\sim \frac{\sigma}{\sqrt{n}}N(0,1) \\
+\frac{\sqrt{n}(X_n - \mu)}{\sigma} &\sim N(0,1),
+\end{aligned}
+$$
+by first moving the finite variance and $n$ terms outside of the normal distribution, and then dividing through.
+
+Given this, if $g$ is some smooth function (i.e. there are no discontinuous jumps in values) then the Delta Method states that:
+
+$$
+\frac{\sqrt{n}(g(X_n) - g(\mu))}{|g'(\mu)|\sigma} \approx N(0,1),
+$$
+
+where $g'$ is the first derivative of $g$. Rearranging again, we can see that 
+
+$$
+g(X_n) \approx N\left(g(\mu), \frac{g'(\mu)^2\sigma^2}{n}\right).
+$$
+
+Note that the statement above is an approximation because $g(X_n) = g(\mu) + g'(\mu)(\hat{\mu-\mu} + g''(\mu)\frac{(X_n - \mu)^2}{2!}+...$, i.e. an infinite sum. The Delta Method avoids the infinite regress by ignoring higher order terms [@liu_2012]. I return to this point below in the proof.
+
+DM also generalizes to multidimensional functions, where instead of converging on the standard normal the random variable must converge in distribution to a multivariate normal, and the derivatives of $g$ are replaced with the gradient of g (a vector of all partial derivatives).[^fn_gradient] For the sake of simplicity I do not prove this result here, and instead focus on the univariate case.
+
+[fn_gradient]:
+   The gradient of some multivariate function $g(x_1,x_2,...,x_n)$ is denoted
+   
+   $$ 
+   \begin{aligned}
+    \nabla g &= \begin{bmatrix}
+           \frac{dg}{dx_1} \\
+           \frac{dg}{dx_2} \\
+           \vdots \\
+           \frac{dg}{dx_n}
+         \end{bmatrix}
+  \end{aligned}
+   $$ 
+   
+## Proof {#proof_dm}
+
+Before offering a full proof, we need to know a little bit about Taylor Series and Taylor's Theorem. I briefly outline this concept here, then show how this expansion helps to prove DM.
+
+### Taylor's Series and Theorem
+
+Suppose we have some continuous function $g$ that is infinitely differentiable. By that, we mean that we mean some function that is continuous over a domain, and for which there is always some further derivative of the function. Consider the case $g(x) = e^{2x}$,
+
+$$
+\begin{aligned}
+g'(x) &= 2e^{2x} \\
+g''(x) &= 4e^{2x} \\
+g'''(x) &= 8e^{2x} \\
+g''''(x) &= 16e^{2x} \\
+...
+\end{aligned}
+$$
+For any integer $k$, the $k$th derivative of $g(x)$ is defined. An interesting non-infinitely differentiable function would be $g(x) = |x|$ where $-\infty < x < \infty$. Here note that when $x > 0$, the first order derivative is 1 (the function is equivalent to $x$), and similarly at $x <0$, the first order derivative is -1 (the function is equivalent to $-x$). When $x = 0$, however, the first derivative is undefined -- the first derivative jumps discontinuously. 
+
+The Taylor Series for an infinitely differentiable function at a given point $x=p$ is an expansion of that function in terms of an infinite sum:
+
+$$
+g(x) = g(p) + g'(p)(x-p) + \frac{g''(p)}{2!}(x-p)^2 + \frac{g'''(p)}{3!}(x-p)^3 + ...
+$$
+
+Taylor Series are useful because they allow us to approximate a function at a lower polynomial order, using Taylor's Theorem. This Theorem loosely states that, for a given point $x=p$, we can approximate a continuous and k-times differentiable function to the $j$th order using the Taylor Series up to the $j$th derivative. In other words, if we have some continuous differentiable function $g(x)$, its first-order approximation (i.e. its linear approximation) at point $p$ is defined as
+
+$$g(p) + g'(p)(x-p).$$
+
+To make this more concrete, consider the function $g(x) = e^x$. The Taylor Series expansion of $g$ at point $x=0$ is
+
+$$g(x) = g(0) + g'(0)(x-0) +  \frac{g''(0)}{2!}(x-0)^2 + \frac{g'''(0)}{3!}(x-0)^3 + ...$$
+
+So up to the first order, Taylors Theorem states that 
+
+$g(x) \approx g(0)+g'(0)(x-0) = 1 + x,$
+
+which is the line tangent to $e^x$ at $x=0$. If we consider up to the second order (the quadratic approximation) our fit would be better, and even more so if we included the third, fourth, fifth orders and so on, up until the $\infty$th order -- at which point the Taylor Approximation is the function precisely.
+
+### Proof of Delta Method
+
+Given Taylor's Theorem, we know that so long as $g$ is a continuous and derivable up to the $k$th derivative, where $k \geq 2$, then at the point $\mu$:
+
+$$ g(X_n) \approx g(\mu) + g'(\mu)(X_n-\mu). $$
+
+Subtracting $g(\mu)$ we have:
+
+$$
+\left(g(X_n) - g(\mu)\right) \approx g'(\mu)(X_n-\mu).
+$$
+We know by CLT and our assumptions regarding $X_n$ that $(X_n-\mu) \xrightarrow{d} N(0,\frac{\sigma^2}{n})$. Therefore we can rewrite the above as
+
+$$
+\left(g(X_n) - g(\mu)\right) \approx g'(\mu)N(0,\frac{\sigma^2}{n}),
+$$
+
+Hence, by the properties of normal distributions (multiplying by a constant, adding a constant):
+
+$$
+g(X_n) \approx N\left(g(\mu),\frac{g'(\mu)^2\sigma^2}{n}\right) \;\;\; \square
+$$
+
+## Applied example
+
+@bowleretal_2006 use the DM to provide confidence intervals for predicted probabilities generated from a logistic regression. Their study involves surveying politicians' attitudes toward electoral rule changes. They estimate a logistic model of the support for change on various features of the politicians including whether they won under existing electoral rules or not. To understand how winning under existing rules affects attitudes, they then generate the predicted probabilities for losers and winners separately.
+
+Generating predicted probabilities from a linear regression involves a non-linear transformation of an asymptotically normal parameter (the logistic coefficient), and therefore we must take account of this transformation when variance of the predicted probability. 
+
+To generate the predicted probability we use the equation
+
+$$
+\hat{p} = \frac{e^{(\hat{\alpha} + \hat{\beta}_1X_1 +...+\beta_nX_n)}}{1+e^{(\hat{\alpha} + \hat{\beta}_1X_1 + ...+\hat{\beta}_nX_n)}},
+$$
+
+where $\hat{p}$ is the predicted probability. Estimating the variance around the predicted probability is therefore quite difficult -- it involves multiple estimators, and non-linear transformations. But we do know that, assuming i.i.d and correct functional form, the estimating error of the logistic equation is asymptotically multivariate normal on the origin. And so the authors can use DM to calculate 95 percent confidence intervals. In general, the delta method is a useful way of estimating standard and errors and confidence intervals when using (but not limited to) logistic regression and other models involving non-linear transformations of model parameters.
+
+## Alternative strategies
+
+The appeal of the delta method is that it gives an analytic approximation of a function's distribution, using the asymptotic properties of some more (model) parameter. But there are alternative methods to approximating these distributions (and thus standard errors) that do not rely on deriving the order conditions of that function.
+
+One obvious alternative is the bootstrap. For a given transformation of a random variable, calculate the output of the function $B$ times using samples of the same size as the original sample, but with replacement and take either the standard deviation or the $a$ and $1-a$ percentiles of the resultant parameter distribution. This method does not require the user to calculate the derivative of a function. It is a non-parametric alternative that simply approximates the distribution itself, rather than approximates the parameters of a parametric distribution.
+
+The bootstrap is computationally more intensive (requiring $B$ separate samples and calculations etc.) but, on the other hand, is less technical to calculate. Moreover, the Delta Method's approximation is limited analytically by the number of terms considered in the Taylor Series expansion. While the first order Taylor Theorem may be reasonable, it may be imprecise. To improve the precision one has to undertake to find the second, third, fourth etc. order terms (which may be analytically difficult). With bootstrapping, however, you can improve precision simply by taking more samples (increasing $B$) [@KinTomWit00].
+
+Given the ease with which we can acquire and deploy computational resources now, perhaps the delta method is no longer as useful in applied research. But the proof and asymptotic implications remain statistically interesting and worth knowing.

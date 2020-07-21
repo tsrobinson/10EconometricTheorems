@@ -65,7 +65,7 @@ The big-O, little-o notation captures the complexity of the equation or, equival
 
 This notation is useful because, when we want to work out the asymptotic limits of a more complicated equation, where multiple terms are affected by the number of observations, if we have a term that converges in probability to zero at a faster rate than others then we can safely ignore that term. Very informally, by summarising a term as $O_p(j)$ we are essentially saying that this term's effect on the outcome is bounded to be only as large as $j$, and typically we summarise those components where all other terms are of an order larger than $j$ and thus substantially important.
 
-## Worked Example: Consistency of mean estimators
+## Worked Example: Consistency of mean estimators {#estimator_consistency}
 
 A parameter is "consistent" if it converges in probability to the true parameter as the number of observations increases. More formally, a parameter  $\hat{\theta}$ is consistent if 
 
