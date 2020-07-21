@@ -1,0 +1,238 @@
+# Weak Law of Large Numbers and Central Limit Theorem {#wlln}
+
+This chapter focuses on two fundamental theorems that form the basis of our inferences from samples to populations. The Weak Law of Large Numbers (WLLN) provides the basis for generalisation from a sample mean to the population mean. The Central Limit Theorem (CLT) provides the basis for quantifying our uncertainty over this parameter. In both cases, I discuss the theorem itself and provide an annotated proof. Finally, I discuss how the two theorems complement each other.
+
+## Weak Law of Large Numbers
+
+### Theorem in Plain English
+
+Suppose we have a random variable $X$. From $X$, we can generate a sequence of random variables $X_1, X_2,..., X_n$ that are independent and identically distributed (i.i.d.) draws of $X$. Assuming $n$ is finite, we can perform calculations on this sequence of random numbers. For example, we can calculate the mean of the sequence $\bar{X}_n  = \frac{1}{n}\sum^n_{i=1}X_i$. This value is the sample mean -- from a much wider population, we have drawn a finite sequence of observations, and calculated the average across them. How do we know that this sample parameter is meaningful with respect to the population, and therefore that we can make inferences from it? 
+
+WLLN states that the mean of a sequence of i.i.d. random variables converges in probability to the expected value of the random variable as the length of that sequence tends to infinity. By 'converging in probability', we mean that the probability that the difference between the mean of the sample and the expected value of the random variable tends to zero. 
+
+In short, WLLN guarantees that with a large enough sample size the sample mean should approximately match the true population parameter. Clearly, this is powerful theorem for any statistical exercise: given we are (always) constrained by a finite sample, WLLN ensures that we can infer from the data something meaningful about the population. For example, from a large enough sample of voters we can estimate the average support for a candidate or party.
+
+More formally, we can state WLLN as follows:
+
+\begin{equation}
+\bar{X}_n \xrightarrow{p} \mathbb{E}[X],
+\end{equation}
+
+where $\xrightarrow{p}$ denotes `converging in probability'.
+
+### Proof {#proof_wlln}
+
+To prove WLLN, we use Chebyshev's Inequality (CI). More specifically we first have to prove Chebyshev's Inequality of the Sample Mean (CISM), and then use CISM to prove WLLN. The following steps are based on the proof provided in @aronow2019foundations.
+
+**Proof of Chebyshev's Inequality of the Sample Mean.** Chebyshev's Inequality for the Sample Mean (CISM) states that:
+
+\begin{equation}
+ P(|\bar{X}_n-\mathbb{E}[X]| \geq k) \leq \frac{var(X)}{k^2 n},
+\end{equation}
+
+where $\bar{X}_n$ is the sample mean of a sequensce of $n$ independent draws from a random variable $X$. Recall CI states that $P(|(X-\mu)/\sigma| \geq k) \leq \frac{1}{k^2}$. To help prove CISM, we can rearrange the left hand side of the inequality by multiplying both sides of the inequality within the probability function by $\sigma$, such that:
+
+\begin{equation}
+   P(|(X-\mu)| \geq k \sigma) \leq \frac{1}{k^2}.
+\end{equation}
+
+Then, finally, let us define $k' = \frac{k}{\sigma}$. Hence:
+
+\begin{align}
+  P(|(\bar{X}-\mathbb{E}[X])| \geq k) &= P(|(\bar{X}-\mathbb{E}[X])| \geq k'\sigma) \\
+  &\leq \frac{1}{{k'}^2} \\
+  &\leq \frac{\sigma^2}{k^2} \\ 
+  &\leq \frac{var(\bar{X})}{k^2} \\
+  &\leq \frac{var(X)}{k^2 n} \; \; \; \square
+\end{align}
+
+This proof is reasonably straightfoward. Using our definition of $k'$ allows us to us rearrange the probability within CISM to match the form of the Chebyshev Inequality stated above, which then allows us to infer the bounds of the probability. We then replace $k'$ with $\frac{k}{\sigma}$, expand and simplify. The move made between the penultimate and final line relies on the fact that variance of the sample mean is equal to the variance in the random variable divided by the sample size (n).\footnote{See Aronow and Miller 2019, p.98.}
+
+**Applying CISM to WLLN proof.** Given that all probabilities are non-negative and CISM, we can now write:
+
+\begin{equation}
+  0 \leq P(|\bar{X}_n−\mathbb{E}[X]| \geq k) \leq \frac{var(X)}{k^2n}. \label{eq:multi_ineq}
+\end{equation}
+
+Note that for the first and third term of this multiple inequality, as $n$ approaches infinity both terms approach 0. In the case of the constant zero, this is trivial. In the final term, note that $var(X)$ denotes the inherent variance of the random variable, and therefore is constant as $n$ increases. Therefore, as the denominator increases, the term converges to zero. 
+
+Since the middle term is sandwiched in between these two limits, by definition we know that this term must also converge to zero.\footnote{To see why this is the case, given the limits of the first and third terms, Equation \ref{multi_ineq} is of the form $0 \leq A \leq 0$ as $n \to \infty$. The only value of $A$ that satisfies this inequality is 0.} Therefore:
+
+\begin{equation}
+\text{lim}_{n \to \infty} P(|\bar{X}_{n}−\mathbb{E}[X]| \geq k) = 0 \; \; \; \square
+\end{equation}
+
+Hence, WLLN is proved: for any value of $k$, the probability that the difference between the sample mean and the expected value is greater or equal to $k$ converges on zero. Since $k$'s value is arbitrary, it can be set to something infinitesimally small, such that the sample mean and expected value converge in value.
+
+
+## Central Limit Theorem {#clt}
+
+WLLN applies to the value of the statistic itself (the mean value). Given a *single*, n-length sequence drawn from a random variable, we know that the mean of this sequence will converge on the expected value of the random variable. But often, we want to think about what happens when we (hypothetically) calculate the mean across *multiple* sequences i.e. expectations under repeat sampling. 
+
+The Central Limit Theorem (CLT) is closely related to the WLLN. Like WLLN, it relies on asymptotic properties of random variables as the sample size increases. CLT, however, lets us make informative claims about the distribution of the sample mean around the true population parameter.
+
+### Theorem in Plain English
+
+CLT states that as the sample size increases, the distribution of sample means converges to a normal distribution. That is, so long as the underlying distribution has a finite variance (bye bye Cauchy!), then irrespective of the underlying distribution of $X$ the distribution of sample means will be a normal distribution!
+
+In fact, there are multiple types of CLT that apply in a variety of different contexts -- cases including Bernoulli random variables (de Moivre - Laplace), where random variables are independent but do not need to be identically distributed (Lyapunov), and where random variables are vectors in $\mathbb{R}^k$ space (multivariate CLT). 
+
+In what follows, I will discuss a weaker, more basic case of CLT where we assume random variables are scalar, independent, and identically distributed (i.e. drawn from the same unknown distribution function). In particular, this section proves that the standardized difference between the sample mean and population mean for i.i.d. random variables converges in distribution to the standard normal distribution $N(0,1)$. This variant of the CLT is called the Lindeberg-Levy CLT, and can be stated as:
+
+\begin{equation}
+  \frac{\bar{X}_n - \mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1),
+\end{equation}
+
+where $\xrightarrow{d}$ denotes 'converging in distribution'.
+
+In general, the CLT is useful because proving that the sample mean is normally distributed allows us to quantify the uncertainty around our parameter estimate. Normal distributions have convenient properties that allow us to calculate the area under any portion of the curve, given  just the same mean and standard deviation. We already know by WLLN that the sample mean will (with a sufficiently large sample) approximate the population mean, so we know that the distribution is also centred around the true population mean. By CLT, the dispersion around that point is therefore normal, and to quantify the probable bounds of the point estimate (under the assumption of repeat sampling) requires only an estimate of the variance.
+
+### Primer: Characteristic Functions
+
+CLT is harder (and lengthier) to prove than other proofs we've encountered so far -- it relies on showing that the sample mean converges *in distribution* to a known mathematical form that uniquely and fully describes the normal distribution. To do so, we use the idea of a *characteristic functions*, which simply denotes a function that completely defines a probability function.
+
+For example, and we will use this later on, we know that the characteristic function of the normal distribution is $e^{it\mu-\frac{\sigma^{2}t^{2}}{2}}$. A standard normal distriibution (where $\mu = 0, \sigma^2 = 1$) therefore simplifies to $e^{-\frac{t^{2}}{2}}$.
+
+More generally, we know that for any scalar random variable $X$, the characteristic function of $X$ is defined as:
+
+\begin{equation}
+\phi_X(t) = \mathbb{E}[e^{itX}],
+\end{equation}
+
+where $t \in \mathbb{R}$ and $i$ is the imaginary unit. Proving why this is the case is beyond the purview of this section, so unfortunately I will just take it at face value. 
+
+We can expand $e^{itX}$ as an infinite sum, using a Taylor Series, since $e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + ...$. Hence:
+
+\begin{equation}
+\phi_X(t) = \mathbb{E}[1 + itX + \frac{(itX)^2}{2!} + \frac{(itX)^3}{3!} + ... ],
+\end{equation}
+
+Note that $i^2 = -1$, and since the latter terms tend to zero faster than the second order term we can summarise them as $o(t^2)$ (they are no larger than of order $t^2$). Therefore we can rewrite this expression as:
+
+\begin{equation}
+\phi_X(t) = \mathbb{E}[1 + itX - \frac{t^2}{2}X^2 + o(t^2)].
+\end{equation}
+
+In the case of continuous random variables, the expected value can be expressed as the integral across all space of the expression multiplied by the probability density, such that:
+
+\begin{equation}
+\phi_X(t) = \int^{\infty}_{-\infty}[1 + itX - \frac{t^2}{2}X^2 + o(t^2)]f_X dX,
+\end{equation}
+
+and this can be simplified to:
+
+\begin{equation}
+\phi_X(t) = 1 + it\mathbb{E}[X] - \frac{t^2}{2}\mathbb{E}[X^2] + o(t^2)],
+\end{equation}
+
+since $1 \times f_X = f_X$, the total area under a probability density necessarily sums to 1; $\int Xf_X dX$ is the definition of the expected value of X, and so by similar logic $\int X^2f_X dX = \mathbb{E}[X^2]$.
+
+In [Ben Lambert's video](https://www.youtube.com/watch?v=0oHjbr2_AhQ) introducing the CLT proof, he notes that if we assume X has mean 0 and variance 1, the characteristic function of that distribution has some nice properties, namely that it simplifies to:
+
+\begin{equation}
+\phi_X(t) = 1 - \frac{t^2}{2} + o(t^2)],
+\end{equation}
+
+since $\mathbb{E}[X] = 0$ cancelling the second term, and $\mathbb{E}[X^2] \equiv \mathbb{E}[(X-0)^2] = \mathbb{E}[(X-\mu)^2] = var(X) = 1$.
+
+One final piece of characteristic function math that will help finalise the CLT proof is to note that if we define some random variable $Q_n = \sum_{i=1}^{n}R_i$, where all $R_i$ are i.i.d., then the characteristic function of $Q_n$ can be expressed as $\phi_{Q_n} (t) = [\phi_{R}(t)]^n$. Again, I will not prove this property here.
+
+### Proof of CLT
+
+This proof is based in part on Ben Lambert's excellent [YouTube series](https://www.youtube.com/channel/UC3tFZR3eL1bDY8CqZDOQh-w), as well as @Lemons_Langevin_Gythiel_2002.
+
+Given the above discussion of a characteristic function, let us assume a sequence of independent and identically distributed (i.i.d.) random variables ${X_1, X_2, ..., X_n}$, each with mean $\mu$ and finite\footnote{Hence why degenerate distributions like the Cauchy are not covered by CLT.} variance $\sigma^2$. The sum of these random variables has mean $n\mu$ (since each random variable has the same mean) and the variance equivalent to $n\sigma^2$ (because the random variables are i.i.d. we know that $var(A,B) = var(A)var(B)$).
+
+Now let's consider the standardized difference between the actual sum of the random variables and the mean. Standardization simply means dividing a parameter estimate by its standard deviation. In particular, we can consider the following standardized random variable:
+
+\begin{equation}
+Z_n = \frac{\sum_{i=1}^{n}(X_i - \mu)}{\sigma\sqrt{n}},
+\end{equation}
+
+where $Z_n$, in words, is the standardised difference between the sum of i.i.d. random variables and the expected value of the sequence. Note that we use the known variance in the denominator.
+
+We can simplify this further:
+
+\begin{equation}
+Z_n = \sum_{i=1}^{n}\frac{1}{\sqrt{n}}Y_i,
+\end{equation}
+
+where we define a new random variable $Y_i = \frac{X_i - \mu}{\sigma}.$
+
+$Y_i$ has some convenient properties. First, since each random variable $X_i$ in our sample has mean $\mu$, we know that $\mathbb{E}[Y_i] = 0$ since $\mathbb{E}[X_i] = \mu$ and therefore $\mu - \mu = 0$. Note that this holds irrespective of the distribution and value of $\mathbb{E}[X_i]$.
+
+The variance of $Y_i$ is also recoverable. First note three basic features of variance: if $a$ is a constant, and $X$ and $Y$ are random variables, $var(a) = 0$; $var(aX) = a^2var(X)$; and from the variance of a sum $var(X - Y) = var(A)-var(B)$. Therefore:
+
+\begin{align}
+var(\frac{1}{\sigma}(X_i - \mu) &= \frac{1}{\sigma^2}var(X_i - \mu) \\
+var(X_i - \mu) &= var(X_i) - var(\mu) \\
+&= var(X_i).
+\end{align}
+
+Hence:
+
+\begin{equation}
+var(Y_i) = \frac{var(X_i)}{\sigma^2} = 1,
+\end{equation} 
+
+since $var(X_i) = \sigma^2$.
+
+At this stage, the proof is tantalisingly close. While we have not yet fully characterised the distribution of $Z_n$ or even $Y_i$, the fact that $Y_i$ has unit variance and a mean of zero means suggests we are on the right track to proving that this does asymptotically tend in distribution to the standard normal. In fact, recall from the primer on characteristic functions, that Lambert notes for any random variable with unit variance and mean of 0, $\phi_X(t) = 1 - \frac{t^2}{2} + o(t^2)$. Hence, we can now say that:
+
+\begin{equation}
+\phi_{Y_i}(t) = 1 - \frac{t^2}{2} + o(t^2). \label{eq:cf_yi_simple}
+\end{equation}
+
+Now let us return to $Z_n = \sum_{i=1}^{n}\frac{1}{\sqrt{n}}Y_i$ and using the final bit of characteristic function math in the primer, we can express the characteristic function of $Z_n$ as:
+
+\begin{equation}
+\phi_{Z_n} (t) = [\phi_{Y} (\frac{t}{\sqrt{n}})]^n,
+\end{equation}
+
+since $Y_i$ is divided by the square root of the sample size. Given our expression of the characteristic function of $Y_i$ in Equation  \ref{eq:cf_yi_simple}:
+
+\begin{equation}
+\phi_{Z_n} (t) = [1 - \frac{t^2}{2n} + o(t^2)]]^n.
+\end{equation}
+
+We can now consider what happens as $n \to \infty$. By definition, we know that  $o(t^2)$ converges to zero faster than the other terms, so we can safely ignore it. As a result, and noting that $e^x = \lim(1+\frac{x}{n})^n$:
+
+\begin{equation}
+\lim_{n \to \infty}\phi_{Z_n} (t) = e^{-\frac{t^2}{2}}.
+\end{equation}
+
+This expression shows that as $n$ tends to infinity, the characteristic function of $Z_n$ is the standard normal distribution (as noted in the characteristic function primer). Therefore:
+
+\begin{align}
+\lim_{n \to \infty}Z_n &= N(0,1) \\
+\lim_{n \to \infty}\frac{\bar{X}_n - \mu}{\sigma\sqrt{n}} &= N(0,1). \; \; \; \square
+\end{align}
+
+The last line here simply follows from the definition of $Z_n$.
+
+### Generalising CLT
+
+From here, it is possible to intuit the more general CLT that the distribution of sampling means is normally distributed around the true mean $\mu$ with variance $\frac{\sigma^2}{n}$. Note this is only a pseudo-proof, because as Lambert notes, multiplying through by $n$ is complicated by the limit operator with respect to $n$. However, it is useful to see how these two CLT are closely related.
+
+First, we can rearrange the limit expression using known features of the normal distribution:
+
+\begin{align}
+\lim_{n \to \infty}Z_n & \xrightarrow{d} N(0,1) \\
+\lim_{n \to \infty} \frac{\sum_{i=1}^{n}(X_i) - n\mu}{\sqrt{n\sigma^2}} & \xrightarrow{d} N(0,1) \\
+\lim_{n \to \infty} \sum_{i=1}^{n}(X_i) - n\mu & \xrightarrow{d} N(0,n\sigma^2) \\
+\lim_{n \to \infty} \sum_{i=1}^{n}(X_i) & \xrightarrow{d} N(n\mu,n\sigma^2),
+\end{align}
+
+since $aN(b,c) = N(ab, a^2c),$ and $N(d,e) + f = N(d+f, e).$
+
+At this penultimate step, we know that the sum of i.i.d. random variables is a normal distribution. To see that the sample mean is also normally distributed, we simply divide through by $n$:
+
+\begin{equation}
+\lim_{n \to \infty} \bar{X} = \frac{1}{n}\sum_{i=1}^{n}(X_i) \xrightarrow{d} N(\mu,\frac{\sigma^2}{n}).
+\end{equation}
+
+### Limitation of CLT (and the importance of WLLN)
+
+Before ending, it is worth noting that CLT is a claim with respect to repeat sampling from a population (holding $n$ constant each time). It is not, therefore, a claim that holds with respect to any particular sample draw. We may actually estimate a mean value that, while probable, lies away from the true population parameter (by definition, since the sample means are normally distributed, there is some dispersion). Constructing uncertainty estimates using CLT on this estimate alone does not guarantee that we are in fact capturing *either* the true variance or the true parameter.
+
+That being said, with sufficiently high-N, we know that WLLN guarantees (assuming i.i.d. observations) that our estimate converges on the population mean. WLLN's asymptotics rely only on sufficiently large sample sizes for a *single* sample. Hence, both WLLN and CLT are crucial for valid inference from sampled data. WLLN leads us to expect that our parameter estimate will in fact be centred approximately near the true parameter. Here, CLT can only say that across multiple samples from the population the distribution of sample means is centred on the true parameter. With WLLN in action, however, CLT allows us to make inferential claims about the uncertainty of this converged parameter.

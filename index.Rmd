@@ -1,0 +1,65 @@
+--- 
+title: "J. Wooldridge's 10 Most Important Theorems"
+author: "Thomas S. Robinson"
+date: "`r Sys.Date() ` -- v0.1``"
+version: 0.1
+site: bookdown::bookdown_site
+output: 
+  bookdown::pdf_book:
+    includes:
+      in_header: preamble.tex
+    toc: no
+  bookdown::gitbook:
+    split_by: chapter
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This book walks through the ten most important statistical theorems as highlighted by Jeffrey Wooldridge, presenting intuiitions, proofs, and applications."
+---
+
+# Preface {-#intro}
+
+Jeffrey Wooldridge claims to tell his students that most of econometrics is just ten statistical theorems applied over and over. Recently he shared his list of ten theorems via social media. They are:
+
+1. Law of Iterated Expectations, Law of Total Variance
+2. Linearity of Expectations, Variance of a Sum
+3. Jensen's Inequality, Chebyshev's Inequality
+4. Linear Projection and its Properties
+5. Weak Law of Large Numbers, Central Limit Theorem
+6. Slutsky's Theorem, Continuous Convergence Theorem, Asymptotic Equivalence Lemma
+7. Big Op, Little op, and the algebra of them
+8. Delta Method
+9. Frisch-Waugh Partialling Out
+10. For PD matrices A and B, A-B is PSD if and only if $B^{-1} - A^{-1}$ is PSD.
+
+This list (which sneaks in a few more then ten proofs) contains concepts that I had some handy-wavey idea about, some that I see constantly in my readings and willfully ignore, and others I hadn't come across before. As an exercise in improving my own knowledge of these fundamentals, I therefore decided to work through and summarise each theorem -- collating notes from material available online, as well as excellent books like Aronow & Miller's [-@aronow2019foundations] *Foundations of Agnostic Statistics*, Angrist and Pischke's [-@angrist2008mostly] *Mostly Harmless Econometrics*, and Wasserman's [-@WassermanAllStatisticsConcise2004] *All of Statistics*.
+
+Working through the proofs I realised that for a list of the most important theorems I struggled to find consistent sources that contained easy to understand explanations *and* respective proofs. Often, econometric textbooks had excellent descriptive intuitions but would hold back on offering full, annotated proofs. Full proofs could be found in various Statistics Departments' online lecture handouts, but tended to be narrow in their focus. Some of the concepts, moreover, had different definitions dependent on the field or source of the proof (like Slutsky's Theorem(s)!)
+
+Hence, on the off chance these notes prove useful to others, I've compiled my notes into a single ``book-type" document. My goal was threefold. To provide intuitive explanations of Wooldridge's most important theorems, to work through and explain the underlying proofs, and when relevant to provide examples from the applied literature. Given my own background, and the motivation behind this project, the proofs *should* be sufficiently detailed and annotated to be accessible to those (like me) with applied statistical training but without a formal statistics background.  
+
+I have also taken some liberties -- for instance combining Wooldridge's first two points into a single note on 'Expectation Theorems', and often omit continuous proofs where discrete proofs are similar and easier to follow. With respect to Slutsky's Theorem, moreover, I assume the continuous convergence theorem rather than proving it outright to avoid the quagmire of maths underlying it.
+
+Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably be errors, omissions, and confusions within this document, however, and I would be more than grateful to receive any feedback at <thomas.robinson@politics.ox.ac.uk> or via the [GitHub repo for this project](github.com/tsrobinson/10EconTheorems).
+
+### Prerequisites {-}
+
+There is no specific knowledge required to understand and work through the material in this document. I worked through these proofs learning the formal bits of maths I needed as I went along. For those who want to consult Google a little less than I had to, the following are the basics that you will need: 
+
+* A simple working knowledge of probability theory
+
+* Know what an expectation over a random variable is, but you don't need to know any mathematical rules about expectations (they are covered in the next chapter!) 
+
+* For later proofs, a very basic understanding of linear algebra (i.e. how you multiply matrices, what transposition is, and what the identity matrix looks like)
+
+Where useful, I provide coded examples using the R programming language, but this code could be easily translated into other languages.
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

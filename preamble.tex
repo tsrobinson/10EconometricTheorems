@@ -1,0 +1,88 @@
+\usepackage{booktabs}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+\usepackage[english]{babel}
+\usepackage{tgpagella}
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{natbib}
+\usepackage[utf8]{inputenc} % keyboard input of accent marks
+\usepackage[hyphens]{url} % formats URLs nicely
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage[capposition=top]{floatrow}
+\usepackage{setspace}
+\usepackage{todonotes}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{bbm}
+\usepackage{threeparttablex}
+\usepackage{footmisc}
+\usepackage{rotating}
+\usepackage{tablefootnote}
+
+\newcommand{\indep}{\perp\!\!\!\!\perp}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.1}
+
+
+\usepackage{bibunits}
+
+\defaultbibliography{refs.bib}
+\defaultbibliographystyle{apsr}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+    }
+
+\geometry{left=1in,right=1in,top=1in,bottom=1in}
+
+\usepackage{wrapfig}
+\usepackage{caption}
+\captionsetup{belowskip=0pt}
+
+%\usepackage{array}
+%\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+\usepackage{array}
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+
+\usepackage{listings}
+\lstset{
+    literate={~} {$\sim$}{1}
+}
+
+
+
+%----------
+% Custom Appendix
+%----------
+
+% To renew numbering in appendix
+\newcommand*{\appheading}[1][Appendix]{%
+  \renewcommand{\thesubsection}{\Alph{subsection}}
+  \renewcommand{\thetable}{\Alph{subsection}.\arabic{table}}
+  \renewcommand{\thefigure}{\Alph{subsection}.\arabic{figure}}
+  \renewcommand{\theequation}{\Alph{subsection}.\arabic{equation}}
+  \numberwithin{equation}{subsection}
+  \numberwithin{figure}{subsection}
+  \numberwithin{table}{subsection}
+}

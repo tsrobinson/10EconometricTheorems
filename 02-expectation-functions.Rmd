@@ -1,0 +1,146 @@
+# Expectation Theorems {#exp_theorems}
+
+
+This chapter sets out some of the basic theorems that can be derived from the definition of expectations, as highlighted by Wooldridge. I have combined his first two points into a single overview of expectation maths. The theorems themselves are not as immediately relevant to applied research as some of the later theorems on Wooldridge's list. However, they often form the fundamental basis upon which future proofs are conducted.
+
+
+## Law of Iterated Expectations
+
+The Law of Iterated Expectations (LIE) states that:
+
+\begin{equation}
+    \mathbb{E}[X] = \mathbb{E}[\mathbb{E}[X|Y]]
+\end{equation}
+
+In plain English, the expected value of $X$ is equal to the  expectation over the conditional expectation of $X$ given $Y$. More simply, the mean of X is equal to a weighted mean of conditional means.
+
+Aronow & Miller [-@aronow2019foundations] note that LIE is `one of the most important theorems', because being able to express unconditional expectation functions in terms of conditional expectations allow you to hold some parameters fixed, making calculations more tractable.
+
+### Proof of LIE
+
+First, we can express the expectation over conditional expectations as a weighted sum over all possible values of Y, and similarly express the conditional expectations using summation too:
+
+\begin{align}
+    \mathbb{E}[\mathbb{E}[X|Y]] &= \sum_y\mathbb{E}[X|Y=y]P(Y=y) \\
+          &= \sum_y\sum_x xP(X=x|Y=y)P(Y=y) \label{eq:lie_expand} \\
+          &= \sum_y\sum_x xP(Y=y|X=x)P(X=x). \label{eq:lie_bayes},
+\end{align}
+
+Note that Equation \ref{eq:lie_bayes} follows due to Bayes' Rule.\footnote{Bayes' Rule states $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$. Therefore:
+\begin{equation*}
+    P(X=x|Y=y)\times P(Y=y) = \frac{P(Y=y|X=x)P(X=x) P(Y=y)}{P(Y=y)} = P(Y=y|X=x)P(X=x).
+\end{equation*}
+}
+
+
+\begin{align}
+    ... &= \sum_y\sum_x xP(X=x)P(Y=y|X=x) \label{eq:rearrange}\\
+          &= \sum_x xP(X=x) \sum_y P(Y=y|X=x) \label{eq:shift}\\
+          &= \sum_x xP(X=x) \label{eq:equals_one}\\
+          &= \mathbb{E}[X] \; \; \; \square
+\end{align}
+
+The last steps of the proof are reasonably simple. Equation \ref{eq:rearrange} is a trivial rearrangement of terms.  Equation \ref{eq:shift} follows since $y$ does not appear in $xP(X=x)$ and so we can move the summation over $Y$ to within the summation over $X$. Finally, Equation \ref{eq:equals_one} follows from the fact that the sum of the conditional probabilities $P(Y=y|X=x)=1$ (by simple probability theory).
+
+
+## Law of Total Variance
+
+The Law of Total Variance (LTV) states the following:
+\begin{equation}
+    var[Y] = \mathbb{E}[var[Y|X]] + var(\mathbb{E}[Y|X])
+\end{equation}
+
+### Proof of LTV
+
+LTV can be proved almost immediately using LIE and the definition of variance in Equation \ref{eq:var_def}:
+
+\begin{align}
+    var(Y) &= \mathbb{E}[Y^2] - \mathbb{E}[Y]^2 \label{eq:var_def} \\ 
+           &= \mathbb{E}[\mathbb{E}[Y^2|X]] - \mathbb{E}[\mathbb{E}[Y|X]]^2 \label{eq:var_lie} \\ 
+           &= \mathbb{E}[var[Y|X] + \mathbb{E}[Y]^2]] - \mathbb{E}[\mathbb{E}[Y|X]]^2 \label{eq:var_by10}\\
+           &= \mathbb{E}[var[Y|X]] + (\mathbb{E}[\mathbb{E}[Y]^2] - \mathbb{E}[\mathbb{E}[Y|X]]^2) \label{eq:var_eshift}\\
+           &= \mathbb{E}[var[Y|X]] + var(\mathbb{E}[Y|X]) \label{eq:var_by10_2} \; \; \; \square
+\end{align}
+
+Equation \ref{eq:var_lie} applies LIE to both $Y^2$ and $Y$ separately. Equation \ref{eq:var_by10} applies the definition of variance in Equation \ref{eq:var_def} to $\mathbb{E}[Y^2|X]$, and the following line simply decomposes this term (since $\mathbb{E}[A+B] = \mathbb{E}[A] + \mathbb{E}[B]$. Finally, note that again the definition in Equation \ref{eq:var_def} to the final two terms of this rearrangement.
+
+## Linearity of Expectations
+
+The Linearity of Expectations (LOE) simply states that:
+
+\begin{equation}
+    \mathbb{E}[aX + bY] = a\mathbb{E}[X] + b\mathbb{E}[Y],
+\end{equation}
+
+where $a$ and $b$ are real numbers, and $X$ and $Y$ are random variables.
+
+### Proof of LOE
+
+\begin{align}
+    \mathbb{E}[aX + bY] &= \sum_x\sum_y (ax+by) P(X=x, Y=y) \label{eq:loe_sums} \\
+    &= \sum_x\sum_y ax P(X=x, Y=y) + \sum_x\sum_y by P(X=x, Y=y) \\
+    &= a\sum_x x\sum_y P(X=x, Y=y) + b \sum_y y \sum_x P(X=x, Y=y) \label{eq:loe_rearrange}\\ 
+\end{align}
+
+Equation \ref{eq:loe_sums} simply expands the expectation into summation form i.e. the expectation is the sum of $aX + bY$ for each (discrete) value of $X$ and $Y$ weighted by their joint probability. We then expand out these terms. Since summations are commutative, we can rearrange the order of the summations for each of the two parts in Equation \ref{eq:loe_rearrange}, and shift the real numbers and random variables outside the various operators.
+
+Now note that $\sum_{i} P(I=i, J=j) \equiv P(J=j)$ by probability theory. Therefore:
+
+\begin{align}
+    ... &= a\sum_x x P(X=x) + b\sum_y y P(Y = y)
+\end{align}
+
+The two terms within summations are just the weighted averages of $X$ and $Y$ respectively, i.e. the expectations of $X$ and $Y$, so:
+
+\begin{align}
+    ... &= a\mathbb{E}[X] + b\mathbb{E}[Y] \; \; \; \square \\
+\end{align}
+
+## Variance of a Sum
+
+There are two versions of the Variance of a Sum (VOS) law:
+
+* $var(X + Y) = var(X) + var(Y),$ when X and Y are independent
+* $var(X+Y) = var(X) + var(Y) + 2Cov(X,Y)$, when X and Y are correlated
+
+### Proof of VoS: $X, Y$ are independent
+
+\begin{align}
+    var(X + Y) &= \mathbb{E}[(X+Y)^2] - (\mathbb{E}[X+Y])^2 \\
+    &= \mathbb{E}[(X^2 + 2XY + Y^2)] - (\mathbb{E}[X] + \mathbb{E}[Y])^2
+\end{align}
+
+The first line of the proof is simply the definition of variance. In the second line, we expand the equation in the first term and using LOE decompose the second term. We can expand this equation further, continuing to use LOE and noting that :
+
+\begin{align}
+    ... &= \mathbb{E}[X^2] + \mathbb{E}[2XY] + \mathbb{E}[Y^2] - (\mathbb{E}[X]^2 + 2\mathbb{E}[X]\mathbb{E}[Y] + \mathbb{E}[Y]^2)\\
+     &= \mathbb{E}[X^2] + \mathbb{E}[Y^2] - \mathbb{E}[X]^2 - \mathbb{E}[Y]^2 \\
+     &= Var[X] + Var[Y] \; \; \; \square
+\end{align}
+
+since $\mathbb{E}[A]\mathbb{E}[B] = \mathbb{E}[AB]$ when $A$ and $B$ are independent. 
+
+### Proof of VoS: $X, Y$ are dependent
+
+As before, we can expand out the variance of a sum into its expected values:
+
+\begin{align}
+    var(X + Y) &= \mathbb{E}[X^2] + \mathbb{E}[2XY] + \mathbb{E}[Y^2] - (\mathbb{E}[X]^2 + 2\mathbb{E}[X]\mathbb{E}[Y] + \mathbb{E}[Y]^2).
+\end{align}
+
+Since $X$ and $Y$ are assumed to be dependent, the non-squared terms do not necessarily cancel each other out anymore. Instead, we can rearrange as follows:
+
+\begin{align}
+    var(X + Y) &= var(X) + var(Y) + \mathbb{E}[2XY] - 2\mathbb{E}[X]\mathbb{E}[Y]\\
+    & = var(X) + var(Y) + 2(\mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]),
+\end{align}
+
+and note that $\mathbb{E}[AB]-\mathbb{E}[A]\mathbb{E}[B] = Cov(A,B)$:
+
+\begin{equation}
+... = var(X) + var(Y) + 2Cov(A,B) \; \; \; \square
+\end{equation}
+
+Two further points are worth noting. First, the independent version of the proof is just a special case of the dependent version of the proof. When $X$ and $Y$ are independent, the covariance between the two random variables is zero, and therefore the the variance of the sum is just equal to the sum of the variances.
+
+Second, nothing in the above proofs rely on there being just two random variables. In fact, $var(\sum^n_i X_i) = \sum^n_ivar(X_i)$ when all variables are independent from each other, and equal to $\sum^n_ivar(X_i) + 2\sum^n_{1 \leq i < j \leq n}Cov(X_i,X_j).$ This can be proved by induction using the above proofs, but intuitively: we can replace, for example, $Y$ with $Y = (Y_1 + Y_2)$ and iteratively apply the above proof first to $X+Y$ and then subsequently expand $var(Y)$ as $var(Y_1+Y_2)$.

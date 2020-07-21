@@ -1,0 +1,224 @@
+# Frisch-Waugh-Lovell Theorem {#frisch}
+
+## Theorem in plain English
+
+The Frisch-Waugh-Lovell Theorem (FWL; after the initial proof by @frisch1933partial, and later generalisation by @lovell1963seasonal) states that:
+
+Any predictor's regression coefficient in a multivariate model is equivalent to the regression coefficient estimated from a bivariate model in which the residualised outcome is regressed on the residualised component of the predictor; where the residuals are taken from models regressing the outcome *and* the predictor on all other predictors in the multivariate regression (separately).
+
+More formally, assume we have a multivariate regression model with $k$ predictors:
+
+\begin{equation}
+\hat{y} = \hat{\beta}_{1}x_{1} + ... \hat{\beta}_{k}x_{k} + \epsilon. \label{eq:multi}
+\end{equation}
+
+FWL states that every $\hat{\beta}_{j}$ in Equation \ref{eq:multi} is equal to $\hat{\beta}^{*}_{j}$, \textit{and} the residual $\epsilon = \epsilon^{*}$ in:
+
+\begin{equation}
+     \epsilon^{y} = \hat{\beta}^{*}_{j}\epsilon^{x_j} + \epsilon^{*} 
+\end{equation}
+
+where:
+
+\begin{align}
+\begin{aligned}
+     \epsilon^y & = y - \sum_{k \neq j}\hat{\beta}^{y}_{k}x_{k} \\
+     \epsilon^{x_{j}} &= x_j - \sum_{k \neq j}\hat{\beta}^{x_{j}}_{k}x_{k}.
+\end{aligned}
+\end{align}
+
+where $\hat{\beta}^{y}_k$ and $\hat{\beta}^{x_j}_k$ are the regression coefficients from two separate regression models of the outcome (omitting $x_j$) and $x_j$ respectively.
+
+In other words, FWL states that each predictor's coefficient in a multivariate regression explains that variance of $y$ not explained by both the other k-1 predictors' relationship with the outcome and their relationship with that predictor, i.e. the independent effect of $x_j$.
+
+## Proof {#proof_fw}
+
+### Primer: Projection matrices[^secnote] 
+
+[^secnote]: *Citation* Based on [lecture notes](https://www.uio.no/studier/emner/sv/oekonomi/ECON4160/h13/undervisningsmateriale/lnote1h13-.pdf) from the University of Oslo's ``Econometrics -- Modelling and Systems Estimation" course (author attribution unclear), and @davidson2004econometric.}
+
+We need two important types of projection matrices to understand the linear algebra proof of FWL. First, the **prediction matrix** that was introduced in [Chapter 4](#linear_projection):
+
+\begin{equation}
+    P = X(X'X)^{-1}X'.
+\end{equation}
+
+Recall that this matrix, when applied to an outcome vector ($y$), produces a set of predicted values ($\hat{y}$). Reverse engineering this, note that $\hat{y}=X\hat{\beta}=X(X'X)^{-1}X'y = Py$.
+
+Since $Py$ produces the predicted values from a regression on $X$, we can define its complement, the \textbf{residual maker}:
+
+\begin{equation}
+    M = I - X(X'X)^{-1}X',
+\end{equation}
+
+since $My = y - X(X'X)^{-1}X'y \equiv y-Py \equiv y - X\hat{\beta} \equiv \hat{\epsilon},$ the residuals from regressing $Y$ on $X$.
+
+Given these definitions, note that M and P are complementary:
+
+\begin{align}
+\begin{aligned}
+    y  &= \hat{y} + \hat{\epsilon} \\
+       &\equiv Py + My \\ 
+    Iy &= Py + My \\
+    Iy &= (P + M)y \\
+    I  &= P + M.
+\end{aligned}
+\end{align}
+
+With these projection matrices, we can express the FWL claim (which we need to prove) as:
+
+\begin{align}
+\begin{aligned}
+    y &= X_{1}\hat{\beta_{1}} + X_{2}\hat{\beta_{2}} + \hat{\epsilon} \\
+    M_{1}y &= M_{1}X_2\hat{\beta}_{2} + \hat{\epsilon}, \label{projection_statement}
+\end{aligned}
+\end{align}
+
+
+### FWL Proof [^secnote2]
+
+[^secnote2]: *Citation*: Adapted from York University, Canada's [wiki for statistical consulting](http://scs.math.yorku.ca/index.php/Statistics:_Frisch-Waugh-Lovell_and_GLS/Proof_of_the_FWL_for_OLS).
+
+Let us assume, as in Equation \ref{projection_statement} that:
+
+\begin{equation}
+    Y = X_1\hat{\beta}_1 + X_2\hat{\beta}_2 + \hat{\epsilon}. \label{eq:multivar}
+\end{equation}
+
+First, we can multiply both sides of Equation \ref{eq:multivar} by the residual maker of $X_1$:
+
+\begin{equation}
+    M_1Y = M_1X_1\hat{\beta}_1 + M_1X_2\hat{\beta}_2 + M_1\hat{\epsilon},
+\end{equation}
+
+which first simplifies to:
+
+\begin{equation}
+    M_1Y = M_1X_2\hat{\beta}_2 + M_1\hat{\epsilon}, \label{eq:part_simp}
+\end{equation}
+
+because $M_1X_1\hat{\beta}_1 \equiv (M_1X_1)\hat{\beta}_1 \equiv 0\hat{\beta}_1 = 0$. In plain English, by definition, all the variance in $X_1$ is explained by $X_1$ and therefore a regression of $X_1$ on itself leaves no part unexplained so $M_1X_1$ is zero.\footnote{Algebraically, $M_1X_1 = (I-X_1(X_{1}'X_1)^{-1}X_1')X_1 = X_1 - X_1(X_1'X_1)^{-1}X_1'X = X_1 - X_1I = X_1 - X_1 = 0.$}
+
+Second, we can simplify Equation \ref{eq:part_simp} further because, by the properties of OLS regression,  $X_1$ and $\epsilon$ are orthogonal. Therefore the residual of the residuals are the residuals! Hence:
+
+\begin{equation*}
+    M_1Y = M_1X_2\hat{\beta}_2 + \hat{\epsilon} \; \; \; \square.
+\end{equation*}
+
+\subsection{Interesting features/extensions}
+
+A couple of interesting features come out of the linear algebra proof:
+
+* FWL also holds for bivariate regression when you first residualise Y and X on a $n\times1$ vector of 1's (i.e. the constant) -- which is like demeaning the outcome and predictor before regressing the two.
+    
+* $X_1$ and $X_2$ are technically \textit{sets} of mutually exclusive predictors i.e. $X_1$ is an $n \times k$ matrix $\{X_1,...,X_k\}$, and $X_2$ is an $n \times m$ matrix $\{X_{k+1},...,X_{k+m}\}$, where $\beta_1$ is a corresponding vector of regression coefficients $\beta_1 = \{\gamma_1,...,\gamma_k\}$, and likewise $\beta_2 = \{\delta_1,..., \delta_m\}$, such that:
+    
+    \begin{align*}
+    Y &= X_1\beta_1 + X_2\beta_2 \\
+      &= X_{1}\hat{\gamma}_1 + ... + X_{k}\hat{\gamma}_k + X_{k+1}\hat{\delta}_{1} + ... + X_{k+m}\hat{\delta}_{m},
+    \end{align*}
+
+Hence the FWL theorem is exceptionally general, applying not only to arbitrarily long coefficient vectors, but also enabling you to back out estimates from any partitioning of the full regression model.
+
+## Coded example
+
+```{r, include=TRUE}
+
+set.seed(89)
+
+## Generate random data
+df <- data.frame(y = rnorm(1000,2,1.5),
+                 x1 = rnorm(1000,1,0.3),
+                 x2 = rnorm(1000,1,4))
+
+## Partial regressions
+
+# Residual of y regressed on x1
+y_res <- lm(y ~ x1, df)$residuals
+
+# Residual of x2 regressed on x1
+x_res <- lm(x2 ~ x1, df)$residuals
+
+resids <- data.frame(y_res, x_res)
+
+## Compare the beta values for x2
+# Multivariate regression:
+summary(lm(y~x1+x2, df))
+
+# Partials regression
+summary(lm(y_res ~ x_res, resids))
+```
+
+**Note:** This isn't an exact demonstration because there is a degrees of freedom of error. The (correct) multivariate regression degrees of freedom is calculated as $N - 3$ since there are three variables. In the partial regression the degrees of freedom is $N - 2$. This latter calculation does not take into account the additional loss of freedom as a result of partialling out $X_1$.
+
+## Application: Sensitivity analysis
+
+@cinelli2020making develop a series of tools for researchers to conduct sensitivity analyses on regression models, using an extension of the omitted variable bias framework. To do so, they use FWL to motivate this bias. Suppose that the full regression model is specified as:
+
+\begin{equation}
+    Y = \hat{\tau}D + X\hat{\beta} + \hat{\gamma}Z + \hat{\epsilon}_{\text{full}}, \label{eq:ch_full}
+\end{equation}
+
+where $\hat{\tau}, \hat{\beta}, \hat{\gamma}$ are estimated regression coefficients, D is the treatment variable, X are observed covariates, and Z are unobserved covariates. Since, Z is unobserved, researchers measure: 
+
+\begin{equation}
+Y = \hat{\tau}_\text{Obs.}D + X\hat{\beta}_\text{Obs.} + \epsilon_\text{Obs}
+\end{equation}
+
+By FWL, we know that $\hat{\tau}_\text{Obs.}$ is equivalent to the coefficient of regressing the residualised outcome (with respect to X), on the residualised outcome of D (again with respect to X). Call these two residuals $Y_r$ and $D_r$.
+
+And recall that the regression model for the final-stage of the partial regressions is bivariate ($Y_r \sim D_r$). Conveniently, a bivariate regression coefficient can be expressed in terms of the covariance between the left-hand and right-hand side variables:\footnote{If $y = \hat{\alpha} + \hat{\beta}x + \epsilon$, then by least squares $\hat{\beta} = \frac{cov(x,y)}{var(x)}$ and $\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}$.}
+
+\begin{equation}
+    \hat{\tau}_\text{Obs.} = \frac{cov(D_r, Y_r)}{var(D_r)}.
+\end{equation}
+
+Note that given the full regression model in Equation \ref{eq:ch_full}, the partial outcome $Y_r$ is actually composed of the elements $\hat{\tau}D_r + \hat{\gamma}Z_r$, and so:
+
+\begin{equation}
+    \hat{\tau}_\text{Obs.} = \frac{cov(D_r, \hat{\tau}D_r + \hat{\gamma}Z_r)}{var(D_r)} \label{eq:cov_expand}
+\end{equation}
+
+Next, we can expand the covariance using the expectation rule that $cov(A, B+C) = cov(A,B) + cov(A,C)$ and since $\hat{\tau},\hat{\gamma}$ are scalar, we can move them outside the covariance functions:
+
+\begin{equation}
+    \hat{\tau}_\text{Obs.} = \frac{\hat{\tau}cov(D_r, D_r) + \hat{\gamma}cov(D_r,Z_r)}{var(D_r)}
+\end{equation}
+
+Since $cov(A,A) = var(A)$ and therefore:
+
+\begin{equation}
+    \hat{\tau}_\text{Obs.} = \frac{\hat{\tau}var(D_r) + \hat{\gamma}cov(D_r,Z_r)}{var(D_r)} \equiv \hat{\tau} + \hat{\gamma}\frac{cov(D_r,Z_r)}{var(D_r)} \equiv \hat{\tau} + \hat{\gamma}\hat{\delta}
+\end{equation}
+
+Frisch-Waugh is so useful because it simplifies a multivariate equation into a bivariate one. While computationally this makes zero difference (unlike in the days of hand computation), here it allows us to use a convenient expression of the bivariate coefficient to show and quantify the bias when you run a regression in the presence of an unobserved confounder. Moreover, note that in Equation \ref{eq:cov_expand}, we implicitly use FWL again since we know that the non-stochastic aspect of Y not explained by X are the residualised components of the full Equation \ref{eq:ch_full}.
+
+### Regressing the partialled-out X on the full Y
+
+In *Mostly Harmless Econometrics* (MHE; @AngristMostlyHarmlessEconometrics2009), the authors note that you also get an identical coefficient to the full regression if you regress the residualised predictor on the non-residualised $Y$. We can use the OVB framework above to explain this case.
+
+Let's take the full regression model as:
+
+\begin{equation}
+Y = \hat{\beta}_1X_1 + \hat{\beta}_2X_2 + \hat{\epsilon}.    
+\end{equation}
+
+\textit{MHE} states that:
+
+\begin{equation}
+    Y = \hat{\beta_1}M_2X_1 + \hat{\epsilon}.
+\end{equation}
+
+Note that this is just FWL, except we have not also residualised $Y$. Our aim is to check whether there is any bias in the estimated coefficient from this second equation. As before, since this is a bivariate regression we can express the coefficient as:
+
+\begin{align}
+    \begin{aligned}
+    \hat{\beta}_1 &= \frac{cov(M_2X_1, Y)}{var(M_2X_1)} \\
+    &= \frac{cov(M_2X_1, \hat{\beta}_1X_1 + \hat{\beta}_2X_2)}{var(M_2X_1)} \\
+    &= \hat{\beta}_1\frac{cov(M_2X_1,X_1)}{var(M_2X_1)} + \hat{\beta}_2\frac{cov(M_2X_1,X_2)}{var(M_2X_1)} \\
+    &= \hat{\beta}_1 + \hat{\beta}_2\times 0 \\
+    &= \hat{\beta}_1
+    \end{aligned}
+\end{align}
+
+This follows from two features. First, $cov(M_2X_1,X_1) = var(M_2X_1)$. Second, it is clear that $cov(M_2X_1, X_2) =0$ because $M_2X_1$ is $X_1$ stripped of any variance associated with  $X_2$ and so, by definition, they do not covary. Therefore, we can recover the unbiased regression coefficient using an adapted version of FWL where we do not residualise Y -- as stated in *MHE*.

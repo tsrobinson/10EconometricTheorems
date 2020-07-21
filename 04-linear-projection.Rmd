@@ -1,0 +1,128 @@
+# Linear Projection {#linear_projection}
+
+This (short) note provides a basic introduction to projection using linear algebra, and discusses its properties. Finally, I demonstrate why linear regression is itself a linear projection. Later discussions about the Frisch-Waugh Theorem rely on projection in their proofs, hence its usefulness!
+
+## Projection
+
+Formally, a projection $P$ is a linear function on a vector space, such that when it is applied to itself you get the same result  i.e. $P^2 = P$.\footnote{Since $P$ is (in the finite case) a square matrix, a projection matrix is an idempotent matrix -- I discuss this property in more detail later on in this note.}
+
+While this definition is slightly intractable, it is easier to intuit what projection is graphically. Consider a vector $v$ in two-dimensions that implies a straight line. Suppose there is some point $x$ away from this straight line in the same two-dimensional space. The projection of $x$, i.e. $Px$, is a function that returns the point ``closest" to $x$ along the vector line $v$. Call this point $\bar{x}$. In most contexts, closest refers to Euclidean distance, i.e. $\sqrt{\sum_{i} (x_i - \bar{x}_i)^2},$ where $i$ ranges over the dimensions of the vector space (in this case two dimensions).\footnote{Euclidean distance has convenient properties, including that the closest distance between a point and a vector line is orthogonal to the vector line itself.}
+
+Note that, in line with the formal definition, projecting a point already on the vector line will just return itself: in other words, the closest point on the vector line to a point already on the vector line is just that same point.
+
+In short, projection is a way of simplifying some n-dimensional space -- compressing information onto a (hyper-) plane. This is useful especially in social science settings where the complexity of the phenomena we study mean exact prediction is impossible. Instead, we often want to construct models that compress busy and variable data into simpler, parsimonious explanations. Projection is the statistical method of achieving this -- it takes the full space and simplifies it with respect to a certain number of dimensions.
+
+While the above is (reasonably) intuitive it is worth spelling out the maths behind projection, not least because it helps demonstrate the connection between linear projection and linear regression.
+
+To begin, we can take some point in n-dimensional space, $x$, and the vector line $v$ along which we want to project $x$. The goal is the following:
+
+\begin{align}
+{arg\,min}_c \sqrt{\sum_{i} (\bar{x}_i - x)^2} & = {arg\,min}_c \sum_{i} (\bar{x}_i - x)^2 \\
+& = {arg\,min}_c \sum_{i} (cv_i - x)^2
+\end{align}
+
+This rearrangement follows since the square root is a monotonic transformation, such that the optimal choice of $c$ is the same across both  $arg\;min$'s. Since any potential $\bar{x}$ along the line drawn by $v$ is some scalar multiplication of that line ($cv$), we can express the function to be minimised with respect to $c$, and then differentiate: 
+
+\begin{align}
+\frac{d}{dc} \sum_{i} (cv_i - x)^2 & = \sum_{i}2v_i(cv_i - x) \\
+& = 2(\sum_{i}cv_i^2  - \sum_{i}v_ix) \\
+& = 2(cv'v - v'x) \Rightarrow 0
+\end{align}
+
+Here we differentiate the equation and rearrange terms. The final step simply converts the summation notation into matrix multiplication. Solving:
+
+\begin{align}
+2(cv'v - v'x) &= 0 \label{eq:dc_equal_zero} \\ 
+cv'v - v'x &= 0 \\
+cv'v &= v'x \\
+c &= (v'v)^{-1}v'x.
+\end{align}
+
+From here, note that $\bar{x}$, the projection of $x$ onto the vector line, is $vc = v(v'v)^{-1}v'x.$ Hence, we can define the projection matrix of $x$ onto $v$ as:
+
+$$ P_v = v(v'v)^{-1}v'.$$
+
+In plain English, for any point in some space, the orthogonal projection of that point onto some subspace, is the point on a vector line that minimises the Euclidian distance between itself and the original point. A visual demonstration of this point is shown and discussed in Figure \@ref{fig:lp-demo} below.
+
+Note also that this projection matrix has a clear analogue to the linear algebraic expression of linear regression. The vector of coefficients in a linear regression $\hat{\beta}$ can be expressed as $(X′X)^{-1}X′y$. And we know that multiplying this vector by the matrix of predictors $X$ results in the vector of predicted values $\hat{y}$. Now we have $\hat{y} = X(X'X)^{-1}X'Y \equiv P_Xy$. Clearly, therefore, linear projection and linear regression are closely related -- and I return to this point in section \@ref{lp_lr}.
+
+## Properties of the projection matrix
+
+Before discussing linear regression, it is worth proving a few properties of the projection matrix $P$. First, and most simply, the projection matrix is square. Since $v$ is of some arbitrary dimensions $n \times k$, its transpose is of dimensions $k \times n$. By linear algebra, the shape of the full matrix is therefore $n \times n$, i.e. square.
+
+Projection matrices are also symmetric, i.e. $P = P'$. To prove symmetry, note that transposing both sides of the projection matrix definition:
+
+\begin{align}
+P' &= (v(v'v)^{-1}v')' \\
+&= v(v'v)^{-1}v'\\
+&= P,
+\end{align}
+
+since $(AB)'=B'A'$ and $(A^{-1})'  = (A')^{-1}.$
+
+Finally, to see that (by definition) projection matrices are idempotent:
+
+\begin{align}
+PP &= v(v'v)^{-1}v'v(v'v)^{-1}v' \\
+&= v(v'v)^{-1}v'\\
+&= P,
+\end{align}
+
+since $(A)^{-1}A = I$ and $BI = B$.
+
+Finally, we can see that the projection of any point is orthogonal to the respected projected point on vector line. Two vectors are orthogonal if $ab = 0$. Starting with the expression in Equation \ref{eq:dc_equal_zero} (i.e. minimising the Euclidean distance with respect to $c$):
+
+\begin{align}
+2(cv'v - v'x) &= 0 \\ 
+v'cv - v'x &= 0 \\
+v'(cv-x) &= 0 \\
+v'(\bar{x} - x) &= 0,
+\end{align}
+
+hence the line connecting the original point $x$ is orthogonal to the vector line.
+
+The projection matrix is very useful in other fundamental theorems in econometrics, like Frisch Waugh Lovell Theorem discussed in [Chapter 9](#frisch).
+
+## Linear regression {#lp_lr}
+
+This section builds on a [blog post by Vladimir Mikulik](https://medium.com/@vladimirmikulik/why-linear-regression-is-a-projection-407d89fd9e3a), which nicely sets out the connection between linear regression and projection. 
+
+Suppose we have a vector of outcomes $y$, and some n-dimensional matrix $X$ of predictors. The linear regression model can be written such that:
+
+\begin{equation}
+y = X\beta + \epsilon,
+\end{equation}
+
+where $\beta$ is a vector of coefficients, and $\epsilon$ is the difference between the prediction and the observed value in $y$. The goal of linear regression is to minimise the sum of the squared residuals:
+
+\begin{equation}
+arg\,min \,\,  \epsilon^2 = arg\,min (y - X\beta)'(y-X\beta)
+\end{equation}
+
+Differentiating with respect to \beta and solving to find $\hat{\beta}$:
+
+\begin{align}
+\frac{d}{d\beta} (y - X\beta)'(y-X\beta) &= -2X(y - X\beta) \\
+&= 2X'X\beta -2X'y \Rightarrow 0 \\
+X'X\hat{\beta} &= X'y \\
+(X'X)^{-1}X'X\hat{\beta} &= (X'X)^{-1}X'y \\
+\hat{\beta} &= (X'X)^{-1}X'y.
+\end{align}
+
+To get our prediction of $y$, i.e. $\hat{y}$, we simply multiply our beta coefficient by the matrix X:
+
+\begin{equation}
+  \hat{y} = X(X'X)^{-1}X'y.
+\end{equation}
+
+Note that the formula for $\hat{y}$ is very similar to what we derived in the first section of this chapter. Namely, here $P = X(X'X)^{-1}X$, an orthogonal prediction matrix. Therefore, the predicted values from a linear regression are an orthogonal projection of $y$ onto the space defined by $X$.
+
+To demonstrate this point visually, and building on [Ben Lambert's explanation](https://www.youtube.com/watch?v=My51wdv2Uz0), imagine that we have some column space defined by $X$, i.e. $col(X)$, which is the subspace spanned by the column vectors of that matrix (i.e. the predictors in our linear regression). And imagine we have a vector $y$ that is away from that column space. Figure \@ref(fig:lp-demo) depicts this set up visually.
+
+```{r lp-demo, out.width='100%', fig.show='hold', fig.cap='Schematic of orthogonal progression with respect to linear regression.', echo=FALSE}
+knitr::include_graphics('images/lp_fig.png', auto_pdf = TRUE)
+```
+
+$\hat{y}$ is a vector within the column space defined by $X$ that minimises the Euclidean distance between the column space and the $y$ vector. Clearly, the point that minimises the Euclidean distance between $y$ and the subspace is the orthogonal projection (the dashed line in Figure \@ref(fig:lp-demo)). We can appreciate this visually by considering any other point on plane defined by $X$, call it $y'$. It's clear that the line between $y'$ and $y$ would not be orthogonal to the column space of $X$ and, consequently, that line would be longer in length.
+
+Put another way, linear regression defines some vector of coefficients $\hat{\beta}$ such that, when multiplied by $X$, we find the vector $\hat{y}$ that minimises the distance between the original observations $y$ and the subspace defined by $X$.

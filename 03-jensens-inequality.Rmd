@@ -1,0 +1,124 @@
+# Inequalities involving expectations {#exp_ineq}
+
+This chapter discusses and proves two inequalities that Wooldridge highlights - Jensen's and Chebyshev's. Both involve expectations (and the theorems derived in the previous chapter). 
+
+## Jensen's Inequality
+
+Jensen's Inequality is a statement about the relative size of the expectation of a function compared with the function over that expectation (with respect to some random variable). To understand the mechanics, I first define convex functions and then walkthrough the logic behind the inequality itself.
+
+### Convex functions
+
+A function $f$ is convex (in two dimensions) if all points on a straight line connecting any two points on the graph of $f$ is above or on that graph.  More formally, $f$ is convex if for $\forall x_1, x_2 \in \mathbb{R}$, and $\forall t \in [0,1]$:
+
+\begin{equation*}
+    f(tx_1, (1-t)x_2) \leq tf(x_1) + (1-t)f(x_2).
+\end{equation*}
+
+Here, $t$ is a weighting parameter that allows us to range over the full interval between points $x_1$ and $x_2$.
+
+Note also that concave functions are defined as the opposite of convex functions i.e. a function $h$ is concave if and only if $-h$ is convex.
+
+### The Inequality
+
+Jensen's Inequality (JI) states that, for a convex function $g$ and random variable $X$:
+
+\begin{equation}
+    \mathbb{E}[g(X)] \geq g(E[X])
+\end{equation}
+
+This inequality is exceptionally general -- it holds for any convex function. Moreover, given that concave functions are defined as negative convex functions, it is easy to see that JI also implies that if $h$ is a \textit{concave} function, $h(\mathbb{E}[X]) \geq \mathbb{E}[h(X)]$.\footnote{Since $-h(x)$ is convex, $\mathbb{E}[-h(X)] \geq -h(\mathbb{E}[X])$ by JI. Hence, $h(\mathbb{E}[X]) - \mathbb{E}[h(X)] \geq 0$ and so $h(\mathbb{E}[X]) \geq \mathbb{E}[h(X)]$}
+
+Interestingly, note the similarity between this inequality and the definition of variance in terms of expectations:
+
+\begin{equation}
+    var(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2,
+\end{equation}
+
+and since $var(X)$ is always positive:
+
+\begin{align}
+    \mathbb{E}[X^2] -  (\mathbb{E}[X])^2 &\geq 0 \\
+    \mathbb{E}[X^2] &\geq (\mathbb{E}[X])^2).
+\end{align}
+
+We can therefore define $g(X) = X^2$ (a convex function), and see that variance itself is an instance of Jensen's Inequality.
+
+### Proof {#proof_ji}
+
+Assume $g(X)$ is a convex function, and $L(X)= a + bX$ is a linear function tangential to $g(X)$ at point $\mathbb{E}[X]$. 
+
+Hence, since $g$ is convex and $L$ is tangential to $g$, we know by definition that:
+
+\begin{equation}
+    g(x) \geq L(x), \forall x \in X.
+\end{equation}
+
+So, therefore:
+
+\begin{align}
+    \mathbb{E}[g(X)] &\geq \mathbb{E}[L(X)] \\
+    &\geq \mathbb{E}[A + bX] \label{eq:def_of_L} \\
+    &\geq a +b\mathbb{E}[X] \label{eq:loe}\\ 
+    &\geq L(\mathbb{E}[X]) \label{eq:def_of_L2}\\
+    &\geq g(\mathbb{E}[X]) \; \; \; \square \label{eq:tang}
+\end{align}
+
+The majority of this proof is straightforward. If one function is always greater than or equal to another function, then the unconditional expectation of the first function must be at least as big as that of the second. The interior lines of the proof follow from the definition of $L$ (Eq. \ref{eq:def_of_L}), linearity of expectations (Eq. \ref{eq:loe}), and another application of the definition of $L$ (Eq. \ref{eq:def_of_L2}).
+
+Equation \ref{eq:tang} follows because, by the definition of the straight line $L$, we know that $L[\mathbb{E}[X]]$ is tangential with $g$ at $\mathbb{E}[\mathbb{E}[X]] = \mathbb{E}[X] = g(\mathbb{E}[X])$.\footnote{Based on \href{http://www.stat.cmu.edu/~larry/=stat705/Lecture2.pdf}{lecture notes} by Larry Wasserman.}
+
+### Application
+
+INSERT DISCUSSION ON WHY S.E. estimate is not unbiased (Aronow and Miller).
+
+## Chebyshev's Inequality
+
+The other inequality Wooldridge highlights is the Chebyshev Inequality. This inequality states that for a set of probability distributions, no more than a specific proportion of that distribution is more than a set distance from the mean.
+
+More formally, if $\mu = \mathbb{E}[X]$ and $\sigma^2 = var(X)$, then:
+
+\begin{equation}
+    %P(|X-\mu|\geq t) \leq \frac{\sigma^2}{t^2} \text{ and }
+    P(|Z| \geq k) \leq \frac{1}{k^2}, 
+\end{equation}
+
+where $Z = (X-\mu)/\sigma$ [@WassermanAllStatisticsConcise2004, p.64] and $k$ indicates the number of standard deviations.
+
+### Proof
+
+First, let us define the variance ($\sigma^2$) as:
+
+\begin{equation}
+    \sigma^2 = \mathbb{E}[(X-\mu)^2].
+\end{equation}
+
+By expectation theory, we know that we can express any unconditional expectation as the weighted sum of its conditional components i.e. $\mathbb{E}[A] = \sum_i\mathbb{E}[A|c_i]P(c_i),$ where $\sum_iP(c_i)=1$. Hence:
+
+\begin{equation}
+    ... = \mathbb{E}[(X-\mu)^2 | k\sigma \leq |X - \mu|]P(k\sigma \leq |X - \mu|) + \mathbb{E}[(X-\mu)^2 | k\sigma > |X - \mu|]P(k\sigma > |X - \mu|) 
+\end{equation}
+
+Since any probability is bounded between 0 and 1, and variance must be greater than or equal to zero, the second term must be non-negative. If we remove this term, therefore, the right-hand side is necessarily either the same size or smaller. Therefore we can alter the equality to the following inequality:
+
+\begin{equation}
+    \sigma^2 \geq \mathbb{E}[(X-\mu)^2 | k\sigma \leq X - \mu]P(k\sigma \leq |X - \mu|)
+\end{equation}
+
+This then simplifies:
+
+\begin{align}
+    \sigma^2 &\geq (k\sigma)^2P(k\sigma \leq |X - \mu|) \\
+    &\geq k^2\sigma^2P(k\sigma \leq |X - \mu|) \\
+    \frac{1}{k^2} &\geq P(|Z| \geq k) \; \; \; \square
+\end{align}
+
+Equation 16 follows because, conditional on $k\sigma \leq |X-\mu|$, $(k\sigma)^2 \leq (X-\mu)^2$, and therefore $\mathbb{E}[(k\sigma)^2] \leq \mathbb{E}[(X-\mu)^2]$. The last step follows by rearranging the terms within the probability function.\footnote{$k\sigma \leq |X-\mu| \equiv k \leq |X-\mu|/\sigma \equiv |Z| \geq k,$ since $\sigma$ is strictly non-negative.}
+
+### Applications
+
+Wasserman notes that this inequality is useful when we want to know the probable bounds of an unknown quantity, and where direct computation would be difficult. It can also be used to prove the Weak Law of Large Numbers (point 5 in Wooldridge's list!) I delay discussion of this application until Section X. 
+
+It is worth noting, however, that the inequality is really powerful -- it guarantees that a certain amount of a probability distribution is within a certain region -- irrespective of the shape of that distribution (so long as we can estimate the mean and variance)! 
+
+For some well-defined distributions, this theorem is weaker than what we know by dint of their form. For example, we know that for a normal distribution, approximately 95 percent of values lie within 2 standard deviations of the mean. Chebyshev's Inequality only guarantees that 75 percent of values lie within two standard deviations of the mean (since $P(|Z| \geq k) \leq \frac{1}{2^2}$). Crucially, however, even if we didn't know whether a given distribution was normal, so long as it is a well-behaved probability distribution (i.e. the unrestricted integral sums to 1) we can guarantee that 75 percent will lie within two standard deviations of the mean.
+
