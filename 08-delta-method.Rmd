@@ -1,3 +1,5 @@
-# Delta Method
+# Delta Method {#dm}
 
-Coming soon!
+# Delta Method in Plain English 
+
+The Delta Method, rather confusingly, is a 
