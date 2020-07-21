@@ -1,3 +1,3 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "[Get Started](https://bookdown.org/yihui/bookdown/get-started.html)" at https://bookdown.org/yihui/bookdown/ for how to compile this example into HTML. You may generate a copy of the book in `bookdown::pdf_book` format by calling `bookdown::render_book('index.Rmd', 'bookdown::pdf_book')`. More detailed instructions are available here https://bookdown.org/yihui/bookdown/build-the-book.html.
+These are the source files for the online guide "J. Wooldridge's 10 Most Important Theorems", hosted on my website [here](ts-robinson.com/files/_book/index.html).
 
-You can find the preview of this example at https://bookdown.org/yihui/bookdown-demo/.
+Please feel free to submit pull requests where there are errors/issues of clarity, or to get in contact via [email](mailto:thomas.robinson@politics.ox.ac.uk)
