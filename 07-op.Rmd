@@ -1,103 +1,143 @@
 # Big Op and little op
 
-## Asymptotic notation
+## Stochastic order notation
 
-"Big Op" (*big oh-pee*), or in algebraic terms $O_p$, is a shorthand means of characterising the convergence in probability of a set of random variables. It directly builds on the same sort of convergence ideas that were discussed in Chapters [5](#wlln) and [6](#slutsky).
+**"Big Op"** (*big oh-pee*), or in algebraic terms $O_p$, is a shorthand means of characterising the convergence in probability of a set of random variables. It directly builds on the same sort of convergence ideas that were discussed in Chapters [5](#wlln) and [6](#slutsky).
 
-Big Op means that some given random variable is stochastically bounded. If we have some set of random variable $X_n$ and some set of constants $a_n$ (where n indexes both sets), then 
+Big Op means that some given random variable is stochastically bounded. If we have some random variable $X_n$ and some constant $a_n$ (where n indexes both sets), then 
 
-$$ X_n = O_p(a_n)$$ is the same as saying that $$ P(|\frac{X_n}{a_n}| > M) < \epsilon, \forall n > N. $$
-$M \text{ and } N$ here are just finite numbers, and $\epsilon$ is some arbitrary (small) number. In plain English, Big Op means that for a large enough $n$ there is some number ($M$) such that the probability that the random variable $\frac{X_n}{a_n}$ is larger than that number is essentially zero. In other words, $\frac{X_n}{a_n}$ converges on some upper bound given a sufficiently large $n$.
+$$ X_n = O_p(a_n)$$ is the same as saying that $$ P(|\frac{X_n}{a_n}| > \delta) < \epsilon, \forall n > N. $$
+$M \text{ and } N$ here are just finite numbers, and $\epsilon$ is some arbitrary (small) number. In plain English, $O_p$ means that for a large enough $n$ there is some number ($M$) such that the probability that the random variable $\frac{X_n}{a_n}$ is larger than that number is essentially zero. It is "bounded in probability" [@vaart_1998, Section 2.2].
 
-Little op, by contrast, refers to convergence in probability towards zero. If $X_n = o_p(a_n)$ then
-
-$$ \frac{x_n}{a_n} = o_p(1) $$ 
-
-where $X_n = o_p(1)$ is the same as
+**"Little op"** (*litle oh-pee*), or $o_p$, refers to convergence in probability towards zero. $X_n = o_p(1)$ is the same as saying
 
 $$ \lim_{n\to\infty} (P|X_n| \geq \epsilon) = 0, \forall\epsilon > 0. $$
 
-Hence, to provide one final rearrangement, we can say that $X_n = o_p(a_n)$ is the same as
+By definition of the notation, if $X_n = o_p(a_n)$ then
+
+$$ \frac{x_n}{a_n} = o_p(1).$$ 
+
+In turn, we can therefore express $X_n = o_p(a_n)$ as
 
 $$ \lim_{n\to\infty} (P|\frac{X_n}{a_n}| \geq \epsilon) = 0, \forall\epsilon > 0.$$
 In other words, $X_n = o_p(a_n)$ if and only if $\frac{X_n}{a_n} \xrightarrow{p} 0$.
 
 ### Relationship of big-O and little-o
 
-The definitions above are perhaps the easiest way to consider these two different forms of converging random variables. But, in fact, we can re-express $o_p$ (again!) to make clear how it diverges from $O_p$.
-
-From above, we can generalise the definition of $X_n = O_p(a_n)$ as
+$O_p$ and $o_p$ may seem quite similar, and that's because they are! Another way to express $X_n = O_p(a_n)$, is
 
 $$\forall \epsilon\;\; \exists N_\epsilon,\delta_\epsilon \;\; s.t. \forall n > N_\epsilon,\;\; P(|\frac{X_n}{a_n}| \geq \delta_\epsilon) \leq \epsilon.$$
-This restatement makes it clear that the values of $\delta$ and $N$ can be found with respect to any given $\epsilon$. That is, we only have to find one value of $N$ and $\delta$ and these can differ as we select a new $\epsilon$. 
+This restatement makes it clear that the values of $\delta$ and $N$ are to be found with respect to $\epsilon$. That is, we only have to find one value of $N$ and $\delta$ for each $epsilon$, and these can differ across $\epsilon$'s. 
 
-Similarly, we can re-express $X_n = o_p(a_n)$ as 
+Using the same notation, $X_n = o_p(a_n)$ can be expressed as
 
 $$\forall \epsilon,\delta\;\; \exists N_{\epsilon,\delta} \;\; s.t. \forall n > N_{\epsilon,\delta},\;\; P(|\frac{X_n}{a_n}| \geq \delta) \leq \epsilon.$$
-Hence, $O_p$ and $o_p$ are very similar, except for how they range over $\delta$ and $N$. In the case of $o_p$, we make a more general statement by saying that for any value of $\epsilon$ and $\delta$, and any combination of those two values, there is some $N$ that satisfies the above inequality (assuming $X_n = o_p(a_n)$). 
+$o_p$ is therefore a more general statement, ranging over all values of $\epsilon$ *and* $\delta$, and hence any combination of those two values. In other words, for any given pair of values for $\epsilon$ and $\delta$ there must be some $N$ that satisfies the above inequality (assuming $X_n = o_p(a_n)$). 
 
 Note also, therefore that $o_p(a_n)$ entails $O_p(a_n)$, but that the inverse is not true. If for all $\epsilon$ and $\delta$ there is some $N_{\epsilon,\delta}$ that satisfies the inequality, then it must be the case that for all $\epsilon$ there exists some $\delta$ such that the inequality also holds. But just because for some $\delta_\epsilon$ the inequality holds, this does not mean that it will hold for *all* $\delta$.
+
+## Notational shorthand and ``arithmetic" properties
+
+Expressions like $X_n =  o_p\left(\frac{1}{\sqrt{n}}\right)$ do not contain literal identities. Big and little o are merely shorthand ways of expressing how some random variable converges (either to a bound or zero). Suppose for instance that we know $X_n = o_p(\frac{1}{n})$. We also therefore know that $X_n = o_p(\frac{1}{n^{0.5}})$. Analogously, think about an object accelerating at a rate of at least $10ms^{-2}$ -- that car is also accelerating at a rate at least $5ms^{-2}$. But it's not the case that $o_p(\frac{1}{n}) = o_p(\frac{1}{\sqrt{n}})$. For instance a car accelerating at least as fast as $5ms^{-2}$ is not necessarily accelerating at least as fast as $10ms^{-2}$.
+
+Hence, when we use stochastic order notation we should be careful to think of it as implying something rather than making the claim that some random variable or expression involving random variables *equals* some stochastic order. 
+
+That being said, we can note some simple implications of combining $O_p$ and/or $o_p$ terms, including:
+
+* $o_p(1) + o_p(1) = o_p(1)$ -- this is straightforward: two terms that both converge to zero at the same rate, collectively converge to zero at that rate. Note this is actually just an application of [Continuous Mapping Theorem](#cmt), since If $X_n = o_p(1), Y_n = o_p(1)$ then $X_n \xrightarrow{p} 0, Y_n \xrightarrow{p} 0$ then the addition of these two terms is a continuous mapping function, and therefore $X_n + Y_n \xrightarrow{p} 0, \; \therefore X_n+Y_n = o_p(1)$.
+
+* $O_p(1) + o_p(1) = O_p(1)$ -- a term that is bounded in probability ($O_p(1)$) plus a term converging in probability to zero, is bounded in probability.
+
+* $O_p(1)o_p(1) = o_p(1)$ -- a bounded probability multiplied by a term that converges (in the same order) to zero itself converges to zero.
+
+* $o_p(R) = R\times o_p(1)$ -- again this is easy to see, since suppose $X_n = o_p(R)$, then $X_n/R = o_p(1)$, and so $X_n = Ro_p(1)$.
+
+Further rules, and intuitive explanations for their validity, can be found in Section 2.2 of @vaart_1998. The last rule above, however, is worth dwelling on briefly since it makes clear why we use different rate terms  ($R$) in the little-o operator. Consider two rates $R^{(1)} = \frac{1}{\sqrt{n}}$, $R^{(2)} = \frac{1}{\sqrt[3]{2}}$, and some random variable $Y_n \xrightarrow{p}0$, that is $Y_n = o_p(1)$. Given the final rule (and remembering the equals signs should not be read literally), if $X_n^{(1)} = o_p(R^{(1)})$, then
+
+$$
+X_n^{(1)} = \frac{1}{\sqrt{n}}\times Y_n,
+$$
+and if $X_n^{(2)} = o_p(R^{(2)})$, then
+
+$$
+X_n^{(2)} = \frac{1}{\sqrt[3]{n}} \times Y_n.
+$$
+For each value of $Y_n$ as $n$ approaches infinity, $X_n^{(1)}$ is smaller $X_n^{(2)}$. In other words, $X_n^{(2)}$ will converge in probably towards zero more slowly. This implication of the notation, again, 
 
 ## Why is this useful?[^fn_cite1]
 
 [^fn_cite1]:
    The first two examples in this section are adapted from Ashesh Rambachan's [Asymptotics Review lecture slides](https://scholar.harvard.edu/files/asheshr/files/asymptotics-slides.pdf), from Harvard Math Camp -- Econometrics 2018.
 
-A simple example of this notation is to consider the random variable $X_n$ that has known $\mathbb{E}[X_n] = X$. We can therefore decompose $X_n = X + o_p(1)$, since we know by the [Weak Law of Large Numbers](#wlln) that $X_n \xrightarrow{p} X$. This is useful because, without having to introduce explicit limits into our equations, we know that with a sufficiently large $n$, the second term of our decomposition converges to zero, and therefore we can (in a hand-wavey fashion) ignore it.
+A simple (trivial) example of this notation is to consider a sequence of random variables $X_n$ with known $\mathbb{E}[X_n] = X$. We can therefore decompose $X_n = X + o_p(1)$, since we know by the [Weak Law of Large Numbers](#wlln) that $X_n \xrightarrow{p} X$. This is useful because, without having to introduce explicit limits into our equations, we know that with a sufficiently large $n$, the second term of our decomposition converges to zero, and therefore we can (in a hand-wavey fashion) ignore it.
 
-Let's consider a more meaningful example. Suppose now that $X_n \sim N(0,v)$. Using known features of normal distributions, we can rearrange this to
+Let's consider a more meaningful example. Suppose now that $X_n \sim N(0,n)$. Using known features of normal distributions, we can rearrange this to
 
-$$ \frac{X_n}{\sqrt{v}} \sim N(0,1). $$
-This distribution tends in probability to zero as $n \to \infty$ by definition, and therefore 
+$$ \frac{X_n}{\sqrt{n}} \sim N(0,1). $$
+There exists some $M$ such that the probability that a value from $N(0,1)$ exceeds $M$ is less than $\epsilon > 0$, and therefore 
 
-$$ X_n = O_p(\sqrt{v}).$$
+$$ X_n = O_p(\sqrt{n}).$$
 
-$X_n$ is also $o_p(v)$ because
+$X_n$ is also little-op of $n$ since
 
-$$ \frac{X_n}{v} \sim N(0,\frac{v}{v^2}) = N(0,\frac{1}{v})$$
-$$ \lim_{n\to\infty}P\left( \left| \frac{N(0,\frac{1}{v})}{v} \right| \geq \epsilon \right) = 0 = o_p(1), $$
+$$\begin{aligned}
+\frac{X_n}{n} &\sim N(0,\frac{n}{n^2})\\
+&\sim N(0,\frac{1}{n})\\
+\end{aligned}$$
+
+And so we just need to prove the righthand side above is $o_p(1)$. To do so note that:
+
+$$\begin{aligned}
+P(|N(0,\frac{1}{n})|> \epsilon) &= P(\frac{1}{\sqrt{n}}|N(0,1)| > \epsilon )\\
+&= P(|N(0,1)| > \sqrt{n}\epsilon) \xrightarrow{p} 0.
+\end{aligned}$$
+
+The last follows since $\sqrt{n} \to \infty$, and so the probability that the standard normal is greater than $\infty$ decreases to zero. Hence $X_n = o_p(n)$.
+
+$$ \lim_{n\to\infty}P\left( \left| \frac{N(0,\frac{1}{n})}{n} \right| \geq \epsilon \right) = 0 = o_p(1), $$
 
 for all $\epsilon > 0$, and therefore that
 
-$$X_n = o_p(v)$$.
+$$X_n = o_p(n)$$.
 
 The big-O, little-o notation captures the complexity of the equation or, equivalently, the rate at which it converges. One way to read $X_n = o_p(a_n)$ is that, for any multiple of $j$, $X_n$ converges in probability to zero at the rate determined by $a_n$. So, for example, $o_p(a_n^2)$ converges faster than $o_p(a_n)$, since for some random variable $X_n$, $\frac{X_n}{a_n^2} < \frac{X_n}{a_n}, n > 1.$
 
-This notation is useful because, when we want to work out the asymptotic limits of a more complicated equation, where multiple terms are affected by the number of observations, if we have a term that converges in probability to zero at a faster rate than others then we can safely ignore that term. Very informally, by summarising a term as $O_p(j)$ we are essentially saying that this term's effect on the outcome is bounded to be only as large as $j$, and typically we summarise those components where all other terms are of an order larger than $j$ and thus substantially important.
+When we want to work out the asymptotic limits of a more complicated equation, where multiple terms are affected by the number of observations, if we have a term that converges in probability to zero at a faster rate than others then we can safely ignore that term.
 
 ## Worked Example: Consistency of mean estimators {#estimator_consistency}
 
-A parameter is "consistent" if it converges in probability to the true parameter as the number of observations increases. More formally, a parameter  $\hat{\theta}$ is consistent if 
+A parameter is "consistent" if it converges in probability to the true parameter as the number of observations increases. More formally, a parameter estimate $\hat{\theta}$ is consistent if 
 
-$$ P(|\hat{\theta} - \theta| \geq \epsilon) \xrightarrow{p} 0 $$
+$$ P(|\hat{\theta} - \theta| \geq \epsilon) \xrightarrow{p} 0, $$
+where $\theta$ is the true parameter.
 
-One question we can ask is how fast our consistent parameter $\hat{\theta}$ converges on the true parameter value. This is an "applied" methods problem to the extent that, as researchers seeking to make an inference about the true parameter, and confronted with potentially many ways of estimating it, we want to choose an efficient estimator i.e. one that gets to the truth quickest!
+One question we can ask is how *fast* our consistent parameter estimate converges on the true parameter value. This is an "applied" methods problem to the extent that, as researchers seeking to make an inference about the true parameter, and confronted with potentially many ways of estimating it, we want to choose an efficient estimator i.e. one that gets to the truth quickest!
 
-Let's suppose we want to estimate the population mean of $X$, i.e. $\bar{X}$. Suppose further we have two potential estimators, the sample mean is $\frac{1}{N}\sum_{i=1}^N X_i$ and the median is $X_{(N+1)/2}$, where $N = 2n + 1$ (we'll assume an odd number of observations for the ease of calculation) and $Y$ is an ordered sequence from smallest to largest.
+Let's suppose we want to estimate the population mean of $X$, i.e. $\bar{X}$. Suppose further we have two potential estimators, the sample mean is $\frac{1}{N}\sum_{i=1}^N X_i$ and the median is $X_{(N+1)/2}$, where $N = 2n + 1$ (we'll assume an odd number of observations for the ease of calculation) and $X$ is an ordered sequence from smallest to largest.
 
 We know by the [Central Limit Theorem](#clt) that the sample mean 
 
 $$ \bar{X}_N \sim \mathcal{N}(\theta, \frac{\sigma^2}{N}), $$
 
-and note that I use $\mathcal{N}$ to denote the normal distribution function, to avoid confusion with $N$ the total number of observations.
+and note that I use $\mathcal{N}$ to denote the normal distribution function, to avoid confusion with the total number of observations $N$.
 
 Withholding the proof, the large-sample distribution of the median estimator can be expressed *approximately*[^fn_median] as
 
-$$ Med\{X_1,X_2,...,X_N\} \sim \mathcal{N}(\theta, \frac{\pi\sigma^2}{2N}). $$
+$$ \text{Med}(X_1,X_2,...,X_N) \sim \mathcal{N}(\theta, \frac{\pi\sigma^2}{2N}). $$
 
 [^fn_median]:
    See [this Wolfram MathWorld post](https://mathworld.wolfram.com/StatisticalMedian.html) for more information about the exact CLT distribution of sample medians. 
    
-How do these estimators perform in practice? We can check by running a simulation study in R. First, let us simulate draws of a standard normal distribution with various sizes of N, and plot the resulting distribution of the two estimators:
+How do these estimators perform in practice? Let's first check this via Monte Carlo, by simulating draws of a standard normal distribution with various sizes of N and plotting the resulting distribution of the two estimators:
 
 ```{r packages, message = FALSE}
 library(tidyverse)
-library(ccaPP) # This pkg includes a faster implementation of calculating the median than base-R's algorithm
+library(ccaPP) # This pkg includes a fast algorithm for the median
 ```
 
 
 ```{r, include=TRUE}
-# Fun. computes sample mean and median 1000 times, using N draws from std. normal
+# Compute sample mean and median 1000 times, using N draws from std. normal
 rep_sample <- function(N) {
   sample_means <- c()
   sample_medians <- c()
@@ -130,12 +170,12 @@ Here we can see that for both the mean and median sample estimators, the distrib
 
 Note that both estimators are therefore unbiased (they are centred on $\theta$), normally distributed, and are consistent (the sampling distributions shrink towards the true parameter as N increases), but that the variances shrinks at slightly different rates. 
 
-We can quantify this using little-o notation and the behaviour of these estimators' with large-samples. First, we can define the estimation errors of the mean and median respectively as 
+We can quantify this using little-o notation and the behaviour of these estimators with large-samples. First, we can define the estimation errors of the mean and median respectively as 
 
 $$
 \begin{aligned}
-\psi_\text{Mean} &= |\hat{\theta} - \theta| \\ 
-&= \left|\mathcal{N}(\theta, \frac{\sigma^2}{N}) - \mathcal{N}(\theta,0) \right| \\
+\psi_\text{Mean} &= \hat{\theta} - \theta \\ 
+&= \mathcal{N}(\theta, \frac{\sigma^2}{N}) - \mathcal{N}(\theta,0) \\
 &= \mathcal{N}(0,\frac{\sigma^2}{N}).
 \end{aligned}
 $$
@@ -144,13 +184,12 @@ Similarly,
 
 $$
 \begin{aligned}
-\psi_\text{Med.} &= \left|\mathcal{N}(\theta, \frac{\pi\sigma^2}{2N}) - \mathcal{N}(\theta,0) \right| \\
+\psi_\text{Med.} &= \mathcal{N}(\theta, \frac{\pi\sigma^2}{2N}) - \mathcal{N}(\theta,0)  \\
 & = \mathcal{N}(0, \frac{\pi\sigma^2}{2N}).
 \end{aligned}
 $$
 
-
-The estimation error of both estimators therefore are centered on zero. Given earlier discussions in this chapter, we can rearrange both to find out their rate of convergence. 
+With both mean and median expressions, we can see that the error of the estimators is centered around zero (i.e. it is unbiased), and that the dispersion of the error around zero decreases as $N$ increases. Given earlier discussions in this chapter, we can rearrange both to find out their rate of convergence. 
 
 For the sample mean:
 
@@ -161,10 +200,9 @@ $$
 \end{aligned}
 $$
 
-And from before, we know that a normal distribution centred around zero is $o_p(1)$, and therefore that 
+We know that for a normal distribution, there will be some $M_\epsilon$, $N_\epsilon$, such that $P(|\mathcal{N}(0,\sigma^2)| \geq M_\epsilon)  < \epsilon$, and hence:
 
-$$ \psi_\text{Mean} = o_p\left(\frac{1}{\sqrt{N}}\right).$$
-
+$$\psi_\text{Mean} = O_p(\frac{1}{\sqrt{N}}).$$
 Similarly, for the sample median:
 
 $$ 
@@ -172,18 +210,26 @@ $$
 \psi_\text{Med.} &= \mathcal{N}(0, \frac{\pi\sigma^2}{2N}) \\
 &= \left( \frac{\pi}{2N}\right)^{0.5}\mathcal{N}(0,\sigma^2) \\
 \psi_\text{Med.}/\left( \frac{\pi}{2N}\right)^{0.5} &= \mathcal{N}(0,\sigma^2)\\
-\psi_\text{Med.} &= o_p\left( \left[\frac{\pi}{2N}\right]^{0.5}\right) \\
-&= o_p\left(\frac{\sqrt{\pi}}{\sqrt{2N}}\right)
+\psi_\text{Med.} &= O_p\left( \left[\frac{\pi}{2N}\right]^{0.5}\right) \\
+&= O_p\left(\frac{\sqrt{\pi}}{\sqrt{2N}}\right).
 \end{aligned}
 $$
 
-And note that the little-o of the sample median's estimating error of the mean is "slower" (read: larger) than the little-o of the sample mean, meaning that the sample mean will converge on the true mean with fewer observations than the sample median. 
+Now we can see that the big-op of the sample median's estimating error is "slower" (read: larger) than the big-op of the sample mean, meaning that the sample mean converges on the true parameter with fewer observations than the sample median.
 
-Finally, using the derivations of the little-o of each estimator, we can plot these orders visually:
+Another, easy way to see the intuition behind this point is to note that at intermediary steps in the above rearrangements:
 
-```{r, include = TRUE}
+$$
+\begin{aligned}
+\psi_\text{Mean} &= \frac{1}{\sqrt{N}}\mathcal{N}(0,\sigma^2) \\
+\psi_\text{Med.} &= \frac{\sqrt{\pi}}{\sqrt{2N}}\mathcal{N}(0,\sigma^2), \\
+\end{aligned}
+$$
+and so, for any sized sample, the estimating error of the median is larger than that of the mean. To visualise this, we can plot the estimation error as a function of $N$ using the rates derived above:
 
-N <- seq(0.01,5, by = 0.01)
+```{r, include = TRUE, warning=FALSE, fig.show='hold', fig.cap='Simulated distribution of sample mean and median estimators for different sized samples.'}
+
+N <- seq(0.01,100, by = 0.01)
 mean_convergence <- 1/sqrt(N)
 median_convergence <- sqrt(pi)/sqrt(2*N)
 
@@ -192,23 +238,10 @@ plot_df <- data.frame(N, Mean = mean_convergence, Median = median_convergence) %
 
 ggplot(plot_df, aes(x = N, y = Rate, color = Estimator)) +
   geom_line() +
+  ylim(0,1) +
   theme(legend.position = "bottom")
 
 ```
 
 Note that the median rate line is always above the mean line for all $N$ (though not by much) -- it therefore has a slower convergence.
-
-## Arithmetic Operations
-
-As a final note, I briefly detail some very basic arithmetic implications that apply to $O_p$ and $o_p$:
-
-* $o_p(1) + o_p(1) = o_p(1)$ -- this is straightforward: two terms that both converge to zero at the same rate, collectively converge to zero at that rate. Note this is actually just an application of [Continuous Mapping Theorem](#cmt), since If $X_n = o_p(1), Y_n = o_p(1)$ then $X_n \xrightarrow{p} 0, Y_n \xrightarrow{p} 0$ then the addition of these two terms is a continuous mapping function, and therefore $X_n + Y_n \xrightarrow{p} 0, \; \therefore X_n+Y_n = o_p(1)$.
-
-* $O_p(1) + o_p(1) = O_p(1)$ -- a term that is bounded in probability ($O_p(1)$) plus a term converging in probability to zero, is bounded in probability.
-
-* $O_p(1)o_p(1) = o_p(1)$ -- a bounded probability multiplied by a term that converges (in the same order) to zero itself converges to zero.
-
-* $o_p(R) = Ro_p(1)$ -- again this is easy to see, since suppose $X_n = o_p(R)$, then $X_n/R = o_p(1)$, and so $X_n = Ro_p(1)$.
-
-These rules are intuitive, and other related rules can be found in Section 2.2 of @vaart_1998.
 

@@ -60,6 +60,7 @@ DM also generalizes to multidimensional functions, where instead of converging o
   \end{aligned}
    $$ 
    
+   
 ## Proof {#proof_dm}
 
 Before offering a full proof, we need to know a little bit about Taylor Series and Taylor's Theorem. I briefly outline this concept here, then show how this expansion helps to prove DM.

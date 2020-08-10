@@ -9,8 +9,10 @@ output:
     includes:
       in_header: preamble.tex
     toc: no
+    fig_caption: yes
   bookdown::gitbook:
     split_by: chapter
+    fig_caption: yes
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike

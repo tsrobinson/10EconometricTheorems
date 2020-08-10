@@ -1,8 +1,8 @@
 # Linear Projection {#linear_projection}
 
-This (short) note provides a basic introduction to projection using linear algebra, and discusses its properties. Finally, I demonstrate why linear regression is itself a linear projection. Later discussions about the Frisch-Waugh Theorem rely on projection in their proofs, hence its usefulness!
+This chapter provides a basic introduction to projection using both linear algebra and geometric demonstrations. I discuss the derivation of the orthogonal projection, its general properties as an "operator", and then discuss its relationship with ordinary least squares (OLS) regression. I defer a discussion of linear projections applications until the [penultimate chapter](#frisch) on the Frisch-Waugh Theorem, where projection matrices feature heavily in the proof.
 
-## Projection
+## Projection {#proj_def}
 
 Formally, a projection $P$ is a linear function on a vector space, such that when it is applied to itself you get the same result  i.e. $P^2 = P$.\footnote{Since $P$ is (in the finite case) a square matrix, a projection matrix is an idempotent matrix -- I discuss this property in more detail later on in this note.}
 
@@ -46,7 +46,7 @@ In plain English, for any point in some space, the orthogonal projection of that
 
 Note also that this projection matrix has a clear analogue to the linear algebraic expression of linear regression. The vector of coefficients in a linear regression $\hat{\beta}$ can be expressed as $(X′X)^{-1}X′y$. And we know that multiplying this vector by the matrix of predictors $X$ results in the vector of predicted values $\hat{y}$. Now we have $\hat{y} = X(X'X)^{-1}X'Y \equiv P_Xy$. Clearly, therefore, linear projection and linear regression are closely related -- and I return to this point in section \@ref{lp_lr}.
 
-## Properties of the projection matrix
+## Properties of the projection matrix {#proj_prop}
 
 Before discussing linear regression, it is worth proving a few properties of the projection matrix $P$. First, and most simply, the projection matrix is square. Since $v$ is of some arbitrary dimensions $n \times k$, its transpose is of dimensions $k \times n$. By linear algebra, the shape of the full matrix is therefore $n \times n$, i.e. square.
 
@@ -85,9 +85,7 @@ The projection matrix is very useful in other fundamental theorems in econometri
 
 ## Linear regression {#lp_lr}
 
-This section builds on a [blog post by Vladimir Mikulik](https://medium.com/@vladimirmikulik/why-linear-regression-is-a-projection-407d89fd9e3a), which nicely sets out the connection between linear regression and projection. 
-
-Suppose we have a vector of outcomes $y$, and some n-dimensional matrix $X$ of predictors. The linear regression model can be written such that:
+What is the relationship between linear projection and linear regression? Suppose we have a vector of outcomes $y$, and some n-dimensional matrix $X$ of predictors. We write the linear regression model as:
 
 \begin{equation}
 y = X\beta + \epsilon,
@@ -95,34 +93,75 @@ y = X\beta + \epsilon,
 
 where $\beta$ is a vector of coefficients, and $\epsilon$ is the difference between the prediction and the observed value in $y$. The goal of linear regression is to minimise the sum of the squared residuals:
 
-\begin{equation}
+$$
 arg\,min \,\,  \epsilon^2 = arg\,min (y - X\beta)'(y-X\beta)
-\end{equation}
+$$
 
-Differentiating with respect to \beta and solving to find $\hat{\beta}$:
-
-\begin{align}
+Differentiating with respect to \beta and solving:
+$$
+\begin{aligned}
 \frac{d}{d\beta} (y - X\beta)'(y-X\beta) &= -2X(y - X\beta) \\
 &= 2X'X\beta -2X'y \Rightarrow 0 \\
 X'X\hat{\beta} &= X'y \\
 (X'X)^{-1}X'X\hat{\beta} &= (X'X)^{-1}X'y \\
 \hat{\beta} &= (X'X)^{-1}X'y.
-\end{align}
+\end{aligned}
+$$
 
 To get our prediction of $y$, i.e. $\hat{y}$, we simply multiply our beta coefficient by the matrix X:
 
-\begin{equation}
+$$
   \hat{y} = X(X'X)^{-1}X'y.
-\end{equation}
+$$
 
-Note that the formula for $\hat{y}$ is very similar to what we derived in the first section of this chapter. Namely, here $P = X(X'X)^{-1}X$, an orthogonal prediction matrix. Therefore, the predicted values from a linear regression are an orthogonal projection of $y$ onto the space defined by $X$.
+Note how the OLS derivation of $\hat{y}$ is very similar to $P = X(X'X)^{-1}X$, the orthogonal prediction matrix. The two differ only in that that $\hat{y}$ includes the original outcome vector $y$ in its expression. But, note that $Py = X(X'X)^{-1}X'y = \hat{y}$! Hence the predicted values from a linear regression simply are an orthogonal projection of $y$ onto the space defined by $X$.
 
-To demonstrate this point visually, and building on [Ben Lambert's explanation](https://www.youtube.com/watch?v=My51wdv2Uz0), imagine that we have some column space defined by $X$, i.e. $col(X)$, which is the subspace spanned by the column vectors of that matrix (i.e. the predictors in our linear regression). And imagine we have a vector $y$ that is away from that column space. Figure \@ref(fig:lp-demo) depicts this set up visually.
+### Geometric interpretation
 
-```{r lp-demo, out.width='100%', fig.show='hold', fig.cap='Schematic of orthogonal progression with respect to linear regression.', echo=FALSE}
-knitr::include_graphics('images/lp_fig.png', auto_pdf = TRUE)
+It should be clear now that linear projection and linear regression are connected -- but it is probably less clear *why* this holds. To understand what's going on, let's depict the problem geometrically.[^fn_lp_ols_vis]
+
+[^fn_lp_ols_vis]:
+  This final section borrows heavily from [Ben Lambert's explanation of projection](https://www.youtube.com/watch?v=My51wdv2Uz0) and a [demonstration using R by Andy Eggers](http://andy.egge.rs/teaching/ols_projection.html). 
+
+To appreciate what's going on, we first need to invert how we typically think about observations, variables and datapoints. Consider a bivariate regression problem with three observations. Our data will include three variables: a constant (c, a vector of 1's), a predictor (X), and an outcome variable (Y). As a matrix, this might look something like the following:
+
+| Y | X | c |
+|:-:|:-:|:-:|
+| 2 | 3 | 1 |
+| 3 | 1 | 1 |
+| 2 | 1 | 1 |
+
+Typically we would represent the relationship geometrically by treating the variables as dimensions, such that every datapoint is an observation (and we would typically ignore the constant column since all its values are the same). 
+
+An alternative way to represent this data is to treat each observation (i.e. row) as a dimension and then represent each variable as a vector. What does that actually mean? Well consider the column $Y = (2,3,2)$. This vector essentially gives us the coordinates for a point in three-dimensional space: $d_1 =  2, d_2 = 3,  d_3 = 2$. Drawing a straight line from the origin (0,0,0) to this point gives us a vector line for the outcome. While visually this might seem strange, from the perspective of our data it's not unusual to refer to each variable as a column vector, and that's precisely because it is a quantity with a magnitude and direction (as determined by its position in $n$ dimensions).
+
+Our predictors are the vectors $X$ and $c$ (note the vector $c$ is now slightly more interesting because it is a diagonal line through the three-dimensional space). We can extend either vector line by multiplying it by a constant e.g. $2X = (6,2,2)$. With a single vector, we can only move forwards or backwards along a line. But if we combine two vectors together, we can actually reach lots of points in space. Imagine placing the vector $X$ at the end of the $c$. The total path now reaches a new point that is not intersected by either $X$ or $c$. In fact, if we multiply $X$ and $c$ by some scalars (numbers), we can snake our way across a whole array of different points in three-dimensional space. Figure \@ref(fig:lp-span) demonstrates some of these combinations in the two dimensional space created by $X$ and $c$.
+
+```{r lp-span, out.width='100%', fig.show='hold', fig.cap='The column space of two predictors.', echo=FALSE}
+knitr::include_graphics('images/span.png', auto_pdf = TRUE)
 ```
 
-$\hat{y}$ is a vector within the column space defined by $X$ that minimises the Euclidean distance between the column space and the $y$ vector. Clearly, the point that minimises the Euclidean distance between $y$ and the subspace is the orthogonal projection (the dashed line in Figure \@ref(fig:lp-demo)). We can appreciate this visually by considering any other point on plane defined by $X$, call it $y'$. It's clear that the line between $y'$ and $y$ would not be orthogonal to the column space of $X$ and, consequently, that line would be longer in length.
+The comprehensive set of all possible points covered by linear combinations of $X$ and $c$ is called the *span* or *column space*. In fact, with the specific set up of this example (3 observations, two predictors), the span of our predictors is a flat plane. Imagine taking a flat bit of paper and aligning one corner with the origin, and then angling surface so that the end points of the vectors $X$ and $c$ are both resting on the card's surface. Keeping that alignment, any point on the surface of the card is reachable by some combination of $X$ and $c$. Algebraically we can refer to this surface as $col(X,c)$, and it generalises beyond two predictors (although this is much harder to visualise).
 
-Put another way, linear regression defines some vector of coefficients $\hat{\beta}$ such that, when multiplied by $X$, we find the vector $\hat{y}$ that minimises the distance between the original observations $y$ and the subspace defined by $X$.
+Crucially, in our reduced example of three-dimensional space, there are points in space not reachable by combining these two vectors (any point above or below the piece of card). We know, for instance that the vector line $y$ lies off this plane. The goal therefore is to find a vector that is on the column space of $(X,c)$ that gets closest to our off-plane vector $y$ as possible.
+
+From our discussion in [Section 3.1](#proj_def), we know that the "best" vector is the orthogonal projection from the column space to the vector $y$. This is the shortest possible distance between the flat plane and the observed outcome. This new vector on the column space is just $\hat{y}$; the vector closest to $y$ that can be created using only information from our predictors ($X$ and the constant $c$). The first pane in Figure \@ref(fig:lp-demo) depicts this set up visually -- each dimension is an observation, each column in the matrix is a vector, and the column space of $(X,c)$ is the shaded grey plane.
+
+```{r lp-demo, out.width='100%', fig.show='hold', fig.cap='Schematic of orthogonal projection and its relation to linear regression.', echo=FALSE}
+knitr::include_graphics('images/lp_solve.png', auto_pdf = TRUE)
+```
+
+Since $\hat{y}$ lies on the column space, we know we only need to combine some scaled amount of $X$ and $c$ to define the vector $\hat{y}$, i.e., $\beta_1X + \beta_0c$. Figure \@ref(fig:lp-demo) shows this geometrically. And in fact, the scalar coefficients $\beta_1, \beta_0$ in this case are just the regression coefficients derived from OLS. Why? Because we know that the orthogonal projection of $y$ onto the column space minimises the error between our prediction $\hat{y}$ and the observed outcome vector $y$. This is the same as the minimisation problem that OLS solves, as outlined at the beginning of this section!
+
+Consider any other vector on the column space, and the distance between itself and and $y$. Each non-orthogonal vector would be longer, and hence have a larger predictive error, than $\hat{y}$. For example, Figure \@ref(fig:lp-distances) plots two alternative vectors on $col(X,c)$ alongside $\hat{y}$. Clearly, $\hat{\epsilon} < \epsilon' < \epsilon'',$ and this is true of any other vector on the column space too.
+
+```{r lp-distances, out.width='100%', fig.show='hold', fig.cap='Schematic of orthogonal projection and its relation to linear regression.', echo=FALSE}
+knitr::include_graphics('images/lp_distances.png', auto_pdf = TRUE)
+```
+
+Hence, linear projection and linear regression can be seen (both algebraically and geometrically) to be solving the same problem -- minimising the (squared) distance between an observed vector $y$ and predictions $\hat{y}$, represented either as errors ($\epsilon$) in OLS, or as a vector on some lower dimensional plane (the column space of $(X,c)$) in linear projection.  This demonstration generalises to many more dimensions i.e. more observations, though of course it becomes much harder to intuit the geometry of higher-dimensioned data. And similarly, with more observations we could also extend the number of predictors such that $X$ is not a single column vector but a matrix of predictor variables (i.e. multivariate regression). Again, the 3-observation, bivariate problem considered here is just much easier to depict visually.
+
+
+
+
+
