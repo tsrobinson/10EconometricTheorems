@@ -10,9 +10,9 @@ Jensen's Inequality is a statement about the relative size of the expectation of
 
 A function $f$ is convex (in two dimensions) if all points on a straight line connecting any two points on the graph of $f$ is above or on that graph.  More formally, $f$ is convex if for $\forall x_1, x_2 \in \mathbb{R}$, and $\forall t \in [0,1]$:
 
-\begin{equation*}
+$$
     f(tx_1, (1-t)x_2) \leq tf(x_1) + (1-t)f(x_2).
-\end{equation*}
+$$
 
 Here, $t$ is a weighting parameter that allows us to range over the full interval between points $x_1$ and $x_2$.
 
@@ -22,24 +22,29 @@ Note also that concave functions are defined as the opposite of convex functions
 
 Jensen's Inequality (JI) states that, for a convex function $g$ and random variable $X$:
 
-\begin{equation}
+$$
     \mathbb{E}[g(X)] \geq g(E[X])
-\end{equation}
+$$
 
-This inequality is exceptionally general -- it holds for any convex function. Moreover, given that concave functions are defined as negative convex functions, it is easy to see that JI also implies that if $h$ is a \textit{concave} function, $h(\mathbb{E}[X]) \geq \mathbb{E}[h(X)]$.\footnote{Since $-h(x)$ is convex, $\mathbb{E}[-h(X)] \geq -h(\mathbb{E}[X])$ by JI. Hence, $h(\mathbb{E}[X]) - \mathbb{E}[h(X)] \geq 0$ and so $h(\mathbb{E}[X]) \geq \mathbb{E}[h(X)]$}
+This inequality is exceptionally general -- it holds for any convex function. Moreover, given that concave functions are defined as negative convex functions, it is easy to see that JI also implies that if $h$ is a \textit{concave} function, $h(\mathbb{E}[X]) \geq \mathbb{E}[h(X)]$.[^fn_conv_conc]
+
+[^fn_conv_conc]:
+    Since $-h(x)$ is convex, $\mathbb{E}[-h(X)] \geq -h(\mathbb{E}[X])$ by JI. Hence, $h(\mathbb{E}[X]) - \mathbb{E}[h(X)] \geq 0$ and so $h(\mathbb{E}[X]) \geq \mathbb{E}[h(X)]$.
 
 Interestingly, note the similarity between this inequality and the definition of variance in terms of expectations:
 
-\begin{equation}
+$$
     var(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2,
-\end{equation}
+$$
 
 and since $var(X)$ is always positive:
 
-\begin{align}
+$$
+\begin{aligned}
     \mathbb{E}[X^2] -  (\mathbb{E}[X])^2 &\geq 0 \\
     \mathbb{E}[X^2] &\geq (\mathbb{E}[X])^2).
-\end{align}
+\end{aligned}
+$$
 
 We can therefore define $g(X) = X^2$ (a convex function), and see that variance itself is an instance of Jensen's Inequality.
 
@@ -69,7 +74,27 @@ Equation \ref{eq:tang} follows because, by the definition of the straight line $
 
 ### Application
 
-INSERT DISCUSSION ON WHY S.E. estimate is not unbiased (Aronow and Miller).
+In Chapter 2 of *Agnostic Statistics* [-@aronow2019foundations], the authors note (almost in passing) that the standard error of the mean is not unbiased, i.e. that $\mathbb{E}[\hat{\sigma}] \neq \sigma$, even though it is consistent i.e. that $\hat{\sigma}\xrightarrow{p} \sigma.$ The bias of the mean's standard error is somewhat interesting (if not surprising), given how frequently we deploy the standard error (and, in a more general sense, highlights how important asymptotics are not just for the estimation of parameters, but also those parameters' uncertainty). The proof of why $\hat{\sigma}$ is biased also, conveniently for this chapter, uses Jensen's Inequality.
+
+The standard error of the mean is denoted as
+
+$$\sigma =  \sqrt{V(\bar{X})}$$,
+
+where $V(\bar{X}) = \frac{V(X)}{n}$.
+
+Our best estimate of this quantity $\hat{\sigma} = \sqrt{\hat{V}(\bar{X})}$ is simply the square root of the sample variance estimator. We know that the variance estimator itself is unbiased and a consistent estimator of the sampling variance (see *Agnostic Statistics* Theorem 2.1.9).
+
+The bias in the estimate of the sample mean's standard error originates from the square root function Note that the square root is a strictly concave function. This means we can make two claims about the estimator. First, as with any concave function we can use the inverse version of Jensen's Inequality, i.e. that $\mathbb{E}[g(X)] \leq g(\mathbb{E}[X])$. Second, since the square root is a *strictly* concave function, we can use the weaker "less than or equal to" operator with the strict "less than" inequality. Hence, the proof is reasonably easy:
+
+$$
+\begin{aligned}
+\mathbb{E}\left[\hat{\sigma}\right] = \mathbb{E}\left[\sqrt{\hat{V}(\bar{X})}\right] &< \sqrt{\mathbb{E}[\hat{V}(\bar{X})]} \;\;\; \text{(by Jensen's Inequality)}\\
+& < \sqrt{V(\bar{X})} \;\;\; \text{(since the sampling variance is unbiased)} \\
+& < \sigma. \;\;\; \square
+\end{aligned}
+$$
+
+The first line follows by first defining the conditional expectation of the sample mean's standard error, and then  applying the noted variant of Jensen's inequality. Then, since we know that the standard error estimator of the variance is unbiased, we can replace the expectation with the true sampling variance, and note finally that the square root of the true sampling variance is, by definition, the true standard error of the sample mean. Hence, we see that our estimator of the sampling mean's standard error is strictly less than the true value and therefore is biased.
 
 ## Chebyshev's Inequality
 

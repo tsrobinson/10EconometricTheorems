@@ -1,7 +1,7 @@
 --- 
 title: "J. Wooldridge's 10 Most Important Theorems"
 author: "Thomas S. Robinson"
-date: "`r Sys.Date() ` -- v0.1``"
+date: "`r Sys.Date() ` -- v0.1`"
 version: 0.1
 site: bookdown::bookdown_site
 output: 
@@ -17,13 +17,17 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: tsrobinson/10EconTheorems
 description: "This book walks through the ten most important statistical theorems as highlighted by Jeffrey Wooldridge, presenting intuiitions, proofs, and applications."
 ---
 
 # Preface {-#intro}
 
-Jeffrey Wooldridge claims to tell his students that most of econometrics is just ten statistical theorems applied over and over. Recently he shared his list of ten theorems via social media. They are:
+```{r intro, out.width='100%', fig.show='hold', echo=FALSE}
+knitr::include_graphics('images/slider_bg2.png', auto_pdf = TRUE)
+```
+
+Jeffrey Wooldridge [tells his students](https://twitter.com/causalinf/status/1259448663270658050) that most of econometrics is just ten statistical theorems applied over and over. As a political scientist with applied statistics training, the list caught my attention because it contained so many of the theorems used in proofs I typically glaze over when reading academic papers. His complete list (slightly paraphrased) is:
 
 1. Law of Iterated Expectations, Law of Total Variance
 2. Linearity of Expectations, Variance of a Sum
@@ -36,27 +40,27 @@ Jeffrey Wooldridge claims to tell his students that most of econometrics is just
 9. Frisch-Waugh Partialling Out
 10. For PD matrices A and B, A-B is PSD if and only if $B^{-1} - A^{-1}$ is PSD.
 
-This list (which sneaks in a few more then ten proofs) contains concepts that I had some handy-wavey idea about, some that I see constantly in my readings and willfully ignore, and others I hadn't come across before. As an exercise in improving my own knowledge of these fundamentals, I therefore decided to work through and summarise each theorem -- collating notes from material available online, as well as excellent books like Aronow & Miller's [-@aronow2019foundations] *Foundations of Agnostic Statistics*, Angrist and Pischke's [-@angrist2008mostly] *Mostly Harmless Econometrics*, and Wasserman's [-@WassermanAllStatisticsConcise2004] *All of Statistics*.
+This list (which sneaks in a few more then ten proofs) contains concepts that I had some handy-wavey idea about, some that I see constantly in my readings and willfully ignore, and others I hadn't come across before. 
 
-Working through the proofs I realised that for a list of the most important theorems I struggled to find consistent sources that contained easy to understand explanations *and* respective proofs. Often, econometric textbooks had excellent descriptive intuitions but would hold back on offering full, annotated proofs. Full proofs could be found in various Statistics Departments' online lecture handouts, but tended to be narrow in their focus. Some of the concepts, moreover, had different definitions dependent on the field or source of the proof (like Slutsky's Theorem(s)!)
+As an exercise in improving my own knowledge of these fundamentals, I decided to work through each theorem -- collating notes from material available online, as well as excellent books like Aronow & Miller's [-@aronow2019foundations] *Foundations of Agnostic Statistics*, Angrist and Pischke's [-@angrist2008mostly] *Mostly Harmless Econometrics*, and Wasserman's [-@WassermanAllStatisticsConcise2004] *All of Statistics*.
 
-Hence, on the off chance these notes prove useful to others, I've compiled my notes into a single ``book-type" document. My goal was threefold. To provide intuitive explanations of Wooldridge's most important theorems, to work through and explain the underlying proofs, and when relevant to provide examples from the applied literature. Given my own background, and the motivation behind this project, the proofs *should* be sufficiently detailed and annotated to be accessible to those (like me) with applied statistical training but without a formal statistics background.  
+I often found for a list of important theorems there were few consistent sources that contained explanations *and* proofs of each. Often, textbooks had excellent descriptive intuitions but would hold back on offering full, annotated proofs. Or full proofs without explaining the wider significance of the theorems. Or the theorem was briefly stated to be used in some other proof. Some of the concepts, moreover, had different definitions dependent on the field or source of the proof (like Slutsky's Theorems)!
 
-I have also taken some liberties -- for instance combining Wooldridge's first two points into a single note on 'Expectation Theorems', and often omit continuous proofs where discrete proofs are similar and easier to follow. With respect to Slutsky's Theorem, moreover, I assume the continuous convergence theorem rather than proving it outright to avoid the quagmire of maths underlying it.
+This document is an attempt to collate the various notes I took, proofs I annotated, applications I worked through into a single document. Each chapter provides some intuitive explanation of the theorem and related concepts, work throughs and explanations of the underlying proofs and, when relevant, examples from the applied literature. I have taken some liberties in doing so -- for instance combining Wooldridge's first two points into a single note on 'Expectation Theorems', and often omit continuous proofs where discrete proofs are similar and easier to follow. That said, I have tried to be reasonably exhaustive in my proofs so that they are accessible to those (like me) without a formal statistics background.
 
-Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably be errors, omissions, and confusions within this document, however, and I would be more than grateful to receive any feedback at <thomas.robinson@politics.ox.ac.uk> or via the [GitHub repo for this project](github.com/tsrobinson/10EconTheorems).
+Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably still be errors, omissions, and confusions passages within this document, and I would be more than grateful to receive any feedback at <thomas.robinson@politics.ox.ac.uk> or via the [GitHub repo for this project](github.com/tsrobinson/10EconTheorems).
 
 ### Prerequisites {-}
 
-There is no specific knowledge required to understand and work through the material in this document. I worked through these proofs learning the formal bits of maths I needed as I went along. For those who want to consult Google a little less than I had to, the following are the basics that you will need: 
+I worked through these proofs learning the bits of maths I needed as I went along. For those who want to consult Google a little less than I had to, the following should ease you into the more formal aspects of this document: 
 
 * A simple working knowledge of probability theory
 
-* Know what an expectation over a random variable is, but you don't need to know any mathematical rules about expectations (they are covered in the next chapter!) 
+* The basics of expectation notation, but you don't need to know any expectation rules (I cover the important ones in [Chapter 1](#exp_theorems)). 
 
-* For later proofs, a very basic understanding of linear algebra (i.e. how you multiply matrices, what transposition is, and what the identity matrix looks like)
+* A basic understanding of linear algebra (i.e. how you multiply matrices, what transposition is, and what the identity matrix looks like). More complicated aspects like eigenvalues and Gaussian elimination make fleeting appearances, particularly in [Chapter 9](#pd), but these are not crucial.
 
-Where useful, I provide coded examples using the R programming language, but this code could be easily translated into other languages.
+* Where relevant, I provide coded examples in R. I've kept my use of packages to a minimum so the code should be reasonably easy to read/port to other programming languages.
 
 
 ```{r include=FALSE}
