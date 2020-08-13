@@ -30,9 +30,12 @@ Note that the final line follows due to Bayes' Rule.[^fn_bayes] And so:
 
 [^fn_bayes]:
     Bayes' Rule states $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$. Therefore:
-    \begin{equation*}
-    P(X=x|Y=y)\times P(Y=y) = \frac{P(Y=y|X=x)P(X=x) P(Y=y)}{P(Y=y)} = P(Y=y|X=x)P(X=x).
-    \end{equation*}
+    $$
+    \begin{aligned}
+    P(X=x|Y=y)\times P(Y=y) &= \frac{P(Y=y|X=x)P(X=x) P(Y=y)}{P(Y=y)} \\
+    &= P(Y=y|X=x)P(X=x).
+    \end{aligned}
+    $$
 
 
 \begin{align}
