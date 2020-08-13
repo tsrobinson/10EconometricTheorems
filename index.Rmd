@@ -17,7 +17,7 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: tsrobinson/10EconTheorems
+github-repo: tsrobinson/10EconometricTheorems
 description: "This book walks through the ten most important statistical theorems as highlighted by Jeffrey Wooldridge, presenting intuiitions, proofs, and applications."
 ---
 
@@ -46,7 +46,7 @@ I found for a list of important theorems there were few consistent sources that 
 
 This resource is an attempt to collate my writing on these theorems -- the intuitions, proofs, and examples -- into a single document. I have taken some liberties in doing so -- for instance combining Wooldridge's first two points into a single chapter on 'Expectation Theorems', and often omit continuous proofs where discrete proofs are similar and easier to follow. That said, I have tried to be reasonably exhaustive in my proofs so that they are accessible to those (like me) without a formal statistics background.
 
-The inspiration for this project was Jeffrey Wooldridge's list, an academic whose work I admire greatly. This document, however, is in no way endorsed by or associated with him. Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably still be some errors, omissions, and confusing passages. I would be more than grateful to receive any feedback at <thomas.robinson@durham.ac.uk> or via the [GitHub repo for this project](github.com/tsrobinson/10EconTheorems).
+The inspiration for this project was Jeffrey Wooldridge's list, an academic whose work I admire greatly. This document, however, is in no way endorsed by or associated with him. Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably still be some errors, omissions, and confusing passages. I would be more than grateful to receive any feedback at <thomas.robinson@durham.ac.uk> or via the [GitHub repo for this project](https://github.com/tsrobinson/10EconometricTheorems).
 
 
 
