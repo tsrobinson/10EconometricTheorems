@@ -1,7 +1,7 @@
 --- 
-title: "J. Wooldridge's 10 Most Important Theorems"
-author: "Thomas S. Robinson"
-date: "`r Sys.Date() ` -- v0.1`"
+title: "10 Fundamental Theorems for Econometrics"
+author: "Thomas S. Robinson \\ (https://ts-robinson.com)"
+date: "`r Sys.Date() ` -- v0.1"
 version: 0.1
 site: bookdown::bookdown_site
 output: 
@@ -27,7 +27,7 @@ description: "This book walks through the ten most important statistical theorem
 knitr::include_graphics('images/slider_bg2.png', auto_pdf = TRUE)
 ```
 
-Jeffrey Wooldridge [tells his students](https://twitter.com/causalinf/status/1259448663270658050) that most of econometrics is just ten statistical theorems applied over and over. As a political scientist with applied statistics training, the list caught my attention because it contained so many of the theorems used in proofs I typically glaze over when reading academic papers. His complete list (slightly paraphrased) is:
+A [list of 10 econometric theorems](https://twitter.com/causalinf/status/1259448663270658050) was circulated on Twitter citing what Jeffrey Wooldridge claims you just need to apply repeatedly in order to do econometrics. As a political scientist with applied statistics training, this list caught my attention because it contains many of the theorems I see used in (methods) papers, but which I typically glaze over for lack of understanding. The complete list (slightly paraphrased) is:
 
 1. Law of Iterated Expectations, Law of Total Variance
 2. Linearity of Expectations, Variance of a Sum
@@ -40,15 +40,15 @@ Jeffrey Wooldridge [tells his students](https://twitter.com/causalinf/status/125
 9. Frisch-Waugh Partialling Out
 10. For PD matrices A and B, A-B is PSD if and only if $B^{-1} - A^{-1}$ is PSD.
 
-This list (which sneaks in a few more then ten proofs) contains concepts that I had some handy-wavey idea about, some that I see constantly in my readings and willfully ignore, and others I hadn't come across before. 
+As an exercise in improving my own knowledge of these fundamentals, I decided to work through each theorem -- using various lecture notes found online, and excellent textbooks like Aronow & Miller's [-@aronow2019foundations] *Foundations of Agnostic Statistics*, Angrist and Pischke's [-@angrist2008mostly] *Mostly Harmless Econometrics*, and Wasserman's [-@WassermanAllStatisticsConcise2004] *All of Statistics*.
 
-As an exercise in improving my own knowledge of these fundamentals, I decided to work through each theorem -- collating notes from material available online, as well as excellent books like Aronow & Miller's [-@aronow2019foundations] *Foundations of Agnostic Statistics*, Angrist and Pischke's [-@angrist2008mostly] *Mostly Harmless Econometrics*, and Wasserman's [-@WassermanAllStatisticsConcise2004] *All of Statistics*.
+I found for a list of important theorems there were few consistent sources that contained explanations *and* proofs of each item. Often, textbooks had excellent descriptive intuitions but would hold back on offering full, annotated proofs. Or full proofs were offered without explaining the wider significance of the theorems. Some of the concepts, moreover, had different definitions dependent on the field or source of the proof (like Slutsky's Theorems)!
 
-I often found for a list of important theorems there were few consistent sources that contained explanations *and* proofs of each. Often, textbooks had excellent descriptive intuitions but would hold back on offering full, annotated proofs. Or full proofs without explaining the wider significance of the theorems. Or the theorem was briefly stated to be used in some other proof. Some of the concepts, moreover, had different definitions dependent on the field or source of the proof (like Slutsky's Theorems)!
+This resource is an attempt to collate my writing on these theorems -- the intuitions, proofs, and examples -- into a single document. I have taken some liberties in doing so -- for instance combining Wooldridge's first two points into a single chapter on 'Expectation Theorems', and often omit continuous proofs where discrete proofs are similar and easier to follow. That said, I have tried to be reasonably exhaustive in my proofs so that they are accessible to those (like me) without a formal statistics background.
 
-This document is an attempt to collate the various notes I took, proofs I annotated, applications I worked through into a single document. Each chapter provides some intuitive explanation of the theorem and related concepts, work throughs and explanations of the underlying proofs and, when relevant, examples from the applied literature. I have taken some liberties in doing so -- for instance combining Wooldridge's first two points into a single note on 'Expectation Theorems', and often omit continuous proofs where discrete proofs are similar and easier to follow. That said, I have tried to be reasonably exhaustive in my proofs so that they are accessible to those (like me) without a formal statistics background.
+The inspiration for this project was Jeffrey Wooldridge's list, an academic whose work I admire greatly. This document, however, is in no way endorsed by or associated with him. Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably still be some errors, omissions, and confusing passages. I would be more than grateful to receive any feedback at <thomas.robinson@durham.ac.uk> or via the [GitHub repo for this project](github.com/tsrobinson/10EconTheorems).
 
-Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably still be errors, omissions, and confusions passages within this document, and I would be more than grateful to receive any feedback at <thomas.robinson@politics.ox.ac.uk> or via the [GitHub repo for this project](github.com/tsrobinson/10EconTheorems).
+
 
 ### Prerequisites {-}
 
@@ -62,6 +62,20 @@ I worked through these proofs learning the bits of maths I needed as I went alon
 
 * Where relevant, I provide coded examples in R. I've kept my use of packages to a minimum so the code should be reasonably easy to read/port to other programming languages.
 
+### Version notes {-}
+
+**v0.1**
+
+This is the first complete draft, and some sections are likely to be changed in future versions. For instance, in [Chapter 9](#pd) I would like to provide a more comprehensive overview of quadratic form in linear algebra, how we derive gradients, and hence the shape of PD matrices. Again, any suggestions on ways to improve/add to this resource are very much welcome!
+
+
+[10 Fundamental Theorems for Econometrics](https://ts-robinson.com/files/_10ET/index.html) by [Thomas Samuel Robinson](https://ts-robinson.com) is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 
+
+
+```{r cc_license, echo=FALSE}
+knitr::include_graphics(c('images/cc.png','images/by.png','images/nc.png','images/sa.png' ))
+```
+
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
@@ -69,3 +83,6 @@ knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
 ```
+
+
+

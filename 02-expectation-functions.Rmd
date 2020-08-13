@@ -26,11 +26,13 @@ First, we can express the expectation over conditional expectations as a weighte
           &= \sum_y\sum_x xP(Y=y|X=x)P(X=x). \label{eq:lie_bayes},
 \end{align}
 
-Note that Equation \ref{eq:lie_bayes} follows due to Bayes' Rule.\footnote{Bayes' Rule states $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$. Therefore:
-\begin{equation*}
+Note that the final line follows due to Bayes' Rule.[^fn_bayes] And so:
+
+[^fn_bayes]:
+    Bayes' Rule states $P(A|B) = \frac{P(B|A)P(A)}{P(B)}$. Therefore:
+    \begin{equation*}
     P(X=x|Y=y)\times P(Y=y) = \frac{P(Y=y|X=x)P(X=x) P(Y=y)}{P(Y=y)} = P(Y=y|X=x)P(X=x).
-\end{equation*}
-}
+    \end{equation*}
 
 
 \begin{align}
@@ -40,7 +42,7 @@ Note that Equation \ref{eq:lie_bayes} follows due to Bayes' Rule.\footnote{Bayes
           &= \mathbb{E}[X] \; \; \; \square
 \end{align}
 
-The last steps of the proof are reasonably simple. Equation \ref{eq:rearrange} is a trivial rearrangement of terms.  Equation \ref{eq:shift} follows since $y$ does not appear in $xP(X=x)$ and so we can move the summation over $Y$ to within the summation over $X$. Finally, Equation \ref{eq:equals_one} follows from the fact that the sum of the conditional probabilities $P(Y=y|X=x)=1$ (by simple probability theory).
+The last steps of the proof are reasonably simple. Equation \ref{eq:rearrange} is a trivial rearrangement of terms.  The second line follows since $y$ does not appear in $xP(X=x)$ and so we can move the summation over $Y$ to within the summation over $X$. The final line follows from the fact that the sum of the conditional probabilities $P(Y=y|X=x)=1$ (by simple probability theory).
 
 
 ## Law of Total Variance
@@ -52,7 +54,7 @@ The Law of Total Variance (LTV) states the following:
 
 ### Proof of LTV
 
-LTV can be proved almost immediately using LIE and the definition of variance in Equation \ref{eq:var_def}:
+LTV can be proved almost immediately using LIE and the definition of variance:
 
 \begin{align}
     var(Y) &= \mathbb{E}[Y^2] - \mathbb{E}[Y]^2 \label{eq:var_def} \\ 
@@ -62,7 +64,7 @@ LTV can be proved almost immediately using LIE and the definition of variance in
            &= \mathbb{E}[var[Y|X]] + var(\mathbb{E}[Y|X]) \label{eq:var_by10_2} \; \; \; \square
 \end{align}
 
-Equation \ref{eq:var_lie} applies LIE to both $Y^2$ and $Y$ separately. Equation \ref{eq:var_by10} applies the definition of variance in Equation \ref{eq:var_def} to $\mathbb{E}[Y^2|X]$, and the following line simply decomposes this term (since $\mathbb{E}[A+B] = \mathbb{E}[A] + \mathbb{E}[B]$. Finally, note that again the definition in Equation \ref{eq:var_def} to the final two terms of this rearrangement.
+The second line applies LIE to both $Y^2$ and $Y$ separately. Then we apply the definition of variance to $\mathbb{E}[Y^2|X]$, and subsequently decompose this term (since $\mathbb{E}[A+B] = \mathbb{E}[A] + \mathbb{E}[B]$.
 
 ## Linearity of Expectations
 
@@ -82,7 +84,7 @@ where $a$ and $b$ are real numbers, and $X$ and $Y$ are random variables.
     &= a\sum_x x\sum_y P(X=x, Y=y) + b \sum_y y \sum_x P(X=x, Y=y) \label{eq:loe_rearrange}\\ 
 \end{align}
 
-Equation \ref{eq:loe_sums} simply expands the expectation into summation form i.e. the expectation is the sum of $aX + bY$ for each (discrete) value of $X$ and $Y$ weighted by their joint probability. We then expand out these terms. Since summations are commutative, we can rearrange the order of the summations for each of the two parts in Equation \ref{eq:loe_rearrange}, and shift the real numbers and random variables outside the various operators.
+The first line simply expands the expectation into summation form i.e. the expectation is the sum of $aX + bY$ for each (discrete) value of $X$ and $Y$ weighted by their joint probability. We then expand out these terms. Since summations are commutative, we can rearrange the order of the summations for each of the two parts in the final line, and shift the real numbers and random variables outside the various operators.
 
 Now note that $\sum_{i} P(I=i, J=j) \equiv P(J=j)$ by probability theory. Therefore:
 

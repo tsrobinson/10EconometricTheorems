@@ -189,7 +189,7 @@ Now let us return to $Z_n = \sum_{i=1}^{n}\frac{1}{\sqrt{n}}Y_i$ and using the f
 \phi_{Z_n} (t) = [\phi_{Y} (\frac{t}{\sqrt{n}})]^n,
 \end{equation}
 
-since $Y_i$ is divided by the square root of the sample size. Given our expression of the characteristic function of $Y_i$ in Equation  \ref{eq:cf_yi_simple}:
+since $Y_i$ is divided by the square root of the sample size. Given our previously stated expression of the characteristic function of $Y_i$:
 
 \begin{equation}
 \phi_{Z_n} (t) = [1 - \frac{t^2}{2n} + o(t^2)]]^n.

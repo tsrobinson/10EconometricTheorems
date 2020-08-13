@@ -16,7 +16,7 @@ This theorem is reasonably intuitive. Suppose that the random variable $X_n$ con
 ```{r, include=TRUE}
 library(ggplot2)
 set.seed(89)
-N <- c(25,1000,1000000)
+N <- c(10,20,500)
 
 results <- data.frame(n = as.factor(levels(N)),
                       X_n = as.numeric(),
@@ -47,7 +47,7 @@ Similarly, if we add the constant $a$ to a standard distribution, the effect is 
 ```{r, include=TRUE}
 library(ggplot2)
 set.seed(89)
-N <- c(25,1000,1000000)
+N <- c(10,20,500)
 
 results <- data.frame(n = as.factor(levels(N)),
                       X_n = as.numeric(),

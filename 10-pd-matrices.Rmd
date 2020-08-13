@@ -103,7 +103,7 @@ x'(B^{-1} - A^{-1})x &\geq 0.
 \end{aligned}
 $$
 
-Proving the opposite direction (if $B^{-1} - A^{-1}$ is PSD then $A-B$ is PSD) simply involves inverting the lines of this proof. $\square$
+Proving the opposite direction (if $B^{-1} - A^{-1}$ is PSD then $A-B$ is PSD) simply involves replacing A with $B^{-1}$ an $B$ with $A^{-1}$ and *vice versa* throughout the proof, since $(A^{-1})^{-1} = A. \;\;\;\square$
 
 ## Applications {#pd_app}
 
@@ -236,7 +236,7 @@ $$
 &= \sigma^2[A'A - (X'X)^{-1}] \\
 &= \sigma^2[A'A - A'X(X'X)^{-1}X'A]\\
 &=\sigma^2A'[A-X(X'X)^{-1}X'A] \\
-&= \sigma^2A'[I-X(X'X)^{01}X']A\\
+&= \sigma^2A'[I-X(X'X)^{-1}X']A\\
 & = \sigma^2A'MA.
 \end{aligned}
 $$
@@ -244,7 +244,7 @@ $$
 Note that we encountered $M$ in [the previous chapter](#frisch). It is the residual maker, and has the known property of being both symmetric and idempotent. Recall from the [first section](#pd_terms) that we know any symmetric, idempotent matrix is positive semi-definite, and so we know that 
 
 $$
-\text{Var}(\tilde{\beta}|X) - \text{Var}(\hat{\beta}|X) \geq \sigma^2,
+\text{Var}(\tilde{\beta}|X) - \text{Var}(\hat{\beta}|X) \geq 0,
 $$
 
 and thus that the regression estimator $\hat{\beta}$ is more efficient (hence better) than any other unbiased, linear estimator of $\beta. \;\;\; \square$

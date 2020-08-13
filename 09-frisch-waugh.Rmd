@@ -85,7 +85,7 @@ Let us assume, as in Equation \ref{projection_statement} that:
     Y = X_1\hat{\beta}_1 + X_2\hat{\beta}_2 + \hat{\epsilon}. \label{eq:multivar}
 \end{equation}
 
-First, we can multiply both sides of Equation \ref{eq:multivar} by the residual maker of $X_1$:
+First, we can multiply both sides by the residual maker of $X_1$:
 
 \begin{equation}
     M_1Y = M_1X_1\hat{\beta}_1 + M_1X_2\hat{\beta}_2 + M_1\hat{\epsilon},
@@ -99,7 +99,7 @@ which first simplifies to:
 
 because $M_1X_1\hat{\beta}_1 \equiv (M_1X_1)\hat{\beta}_1 \equiv 0\hat{\beta}_1 = 0$. In plain English, by definition, all the variance in $X_1$ is explained by $X_1$ and therefore a regression of $X_1$ on itself leaves no part unexplained so $M_1X_1$ is zero.\footnote{Algebraically, $M_1X_1 = (I-X_1(X_{1}'X_1)^{-1}X_1')X_1 = X_1 - X_1(X_1'X_1)^{-1}X_1'X = X_1 - X_1I = X_1 - X_1 = 0.$}
 
-Second, we can simplify Equation \ref{eq:part_simp} further because, by the properties of OLS regression,  $X_1$ and $\epsilon$ are orthogonal. Therefore the residual of the residuals are the residuals! Hence:
+Second, we can simplify this equation further because, by the properties of OLS regression,  $X_1$ and $\epsilon$ are orthogonal. Therefore the residual of the residuals are the residuals! Hence:
 
 \begin{equation*}
     M_1Y = M_1X_2\hat{\beta}_2 + \hat{\epsilon} \; \; \; \square.
