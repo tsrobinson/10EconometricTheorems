@@ -149,7 +149,7 @@ Conditional on $k\sigma \leq |X-\mu|$, $(k\sigma)^2 \leq (X-\mu)^2$, and therefo
 
 ### Applications
 
-Wasserman notes that this inequality is useful when we want to know the probable bounds of an unknown quantity, and where direct computation would be difficult. It can also be used to prove the Weak Law of Large Numbers (point 5 in Wooldridge's list!) I delay discussion of this application until Section X. 
+Wasserman [-@WassermanAllStatisticsConcise2004] notes that this inequality is useful when we want to know the probable bounds of an unknown quantity, and where direct computation would be difficult. It can also be used to prove the Weak Law of Large Numbers (point 5 in Wooldridge's list!), which I demonstrate [here](#proof_wlln). 
 
 It is worth noting, however, that the inequality is really powerful -- it guarantees that a certain amount of a probability distribution is within a certain region -- irrespective of the shape of that distribution (so long as we can estimate the mean and variance)! 
 
