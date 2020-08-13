@@ -9,9 +9,9 @@ Formally, a projection $P$ is a linear function on a vector space, such that whe
 [^fn_square]:
   Since $P$ is (in the finite case) a square matrix, a projection matrix is an idempotent matrix -- I discuss this property in more detail later on in this note.
 
-This definition is slightly intractable, but the intuition is reasonably simple. Consider a vector $v$ in two-dimensions. $v$ is a finite straight line pointing in a given direction. Suppose there is some point $x$ not on this straight line but in the same two-dimensional space. The projection of $x$, i.e. $Px$, is a function that returns the point "closest" to $x$ along the vector line $v$. Call this point $\bar{x}$. In most contexts, closest refers to Euclidean distance, i.e. $\sqrt{\sum_{i} (x_i - \bar{x}_i)^2},$ where $i$ ranges over the dimensions of the vector space (in this case two dimensions).[fn^euclid] Figure \@ref(fig:lp_basic) depicts this logic visually. The green dashed line shows the orthogonal projection, and red dashed lines indicate other potential (non-orthgonal) projections that are further away in Euclidean space from $x$ than $\bar{x}$.
+This definition is slightly intractable, but the intuition is reasonably simple. Consider a vector $v$ in two-dimensions. $v$ is a finite straight line pointing in a given direction. Suppose there is some point $x$ not on this straight line but in the same two-dimensional space. The projection of $x$, i.e. $Px$, is a function that returns the point "closest" to $x$ along the vector line $v$. Call this point $\bar{x}$. In most contexts, closest refers to Euclidean distance, i.e. $\sqrt{\sum_{i} (x_i - \bar{x}_i)^2},$ where $i$ ranges over the dimensions of the vector space (in this case two dimensions).[^fn_euclid] Figure \@ref(fig:lp-basic) depicts this logic visually. The green dashed line shows the orthogonal projection, and red dashed lines indicate other potential (non-orthgonal) projections that are further away in Euclidean space from $x$ than $\bar{x}$.
 
-[fn_euclid]:
+[^fn_euclid]:
   Euclidean distance has convenient properties, including that the closest distance between a point and a vector line is orthogonal to the vector line itself.
 
 ```{r lp-basic, out.width='100%', fig.show='hold', fig.cap='Orthogonal projection of a point onto a vector line.', echo=FALSE}

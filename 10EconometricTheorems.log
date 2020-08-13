@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 20.6.29) (preloaded format=xelatex 2020.7.10)  13 AUG 2020 14:21
+This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 20.6.29) (preloaded format=xelatex 2020.7.10)  13 AUG 2020 14:58
 entering extended mode
 **./10EconometricTheorems.tex
 (10EconometricTheorems.tex
@@ -1501,11 +1501,11 @@ File: images/lp_basic.png Graphic file (type bmp)
 <images/lp_basic.png>
 [13
 
-]
+] [14]
 
-LaTeX Warning: Reference `fig:lp-demo' on page 14 undefined on input line 646.
+LaTeX Warning: Reference `fig:lp-demo' on page 15 undefined on input line 646.
 
-[14] [15]
+[15]
 Missing character: There is no 𝛽 in font [lmroman10-regular]:mapping=tex-text;!
 
 Underfull \hbox (badness 10000) in alignment at lines 739--743
@@ -1632,6 +1632,6 @@ Here is how much of TeX's memory you used:
  52730 multiletter control sequences out of 15000+200000
  539758 words of font info for 84 fonts, out of 3000000 for 9000
  0 hyphenation exceptions out of 8191
- 68i,18n,118p,1015b,727s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 68i,18n,118p,1125b,727s stack positions out of 5000i,500n,10000p,200000b,50000s
 
 Output written on 10EconometricTheorems.pdf (61 pages).
