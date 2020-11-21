@@ -1,4 +1,4 @@
-These are the source files for the online guide "10 Fundamental Theorems for Econometrics", hosted on my website [here](https://ts-robinson.com/files/_10ET/index.html).
+These are the source files for the online guide "10 Fundamental Theorems for Econometrics", hosted on [here](https://bookdown.org/ts_robinson1994/10_fundamental_theorems_for_econometrics/vtDma6bZJ/).
 
 Please feel free to submit pull requests where there are errors/issues of clarity, or to get in contact via [email](mailto:thomas.robinson@politics.ox.ac.uk.)
 
