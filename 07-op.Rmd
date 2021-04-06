@@ -62,7 +62,7 @@ and if $X_n^{(2)} = o_p(R^{(2)})$, then
 $$
 X_n^{(2)} = \frac{1}{\sqrt[3]{n}} \times Y_n.
 $$
-For each value of $Y_n$ as $n$ approaches infinity, $X_n^{(1)}$ is smaller $X_n^{(2)}$. In other words, $X_n^{(2)}$ will converge in probably towards zero more slowly. This implication of the notation, again, 
+For each value of $Y_n$ as $n$ approaches infinity, $X_n^{(1)}$ is bigger than $X_n^{(2)}$. In other words, $X_n^{(2)}$ will converge in probably towards zero faster. This implication of the notation, again, 
 
 ## Why is this useful?[^fn_cite1]
 
