@@ -122,7 +122,7 @@ In the case of continuous random variables, the expected value can be expressed 
 and this can be simplified to:
 
 \begin{equation}
-\phi_X(t) = 1 + it\mathbb{E}[X] - \frac{t^2}{2}\mathbb{E}[X^2] + o(t^2)],
+\phi_X(t) = 1 + it\mathbb{E}[X] - \frac{t^2}{2}\mathbb{E}[X^2] + o(t^2),
 \end{equation}
 
 since $1 \times f_X = f_X$, the total area under a probability density necessarily sums to 1; $\int Xf_X dX$ is the definition of the expected value of X, and so by similar logic $\int X^2f_X dX = \mathbb{E}[X^2]$.
@@ -130,7 +130,7 @@ since $1 \times f_X = f_X$, the total area under a probability density necessari
 In [Ben Lambert's video](https://www.youtube.com/watch?v=0oHjbr2_AhQ) introducing the CLT proof, he notes that if we assume X has mean 0 and variance 1, the characteristic function of that distribution has some nice properties, namely that it simplifies to:
 
 \begin{equation}
-\phi_X(t) = 1 - \frac{t^2}{2} + o(t^2)],
+\phi_X(t) = 1 - \frac{t^2}{2} + o(t^2),
 \end{equation}
 
 since $\mathbb{E}[X] = 0$ cancelling the second term, and $\mathbb{E}[X^2] \equiv \mathbb{E}[(X-0)^2] = \mathbb{E}[(X-\mu)^2] = var(X) = 1$.
