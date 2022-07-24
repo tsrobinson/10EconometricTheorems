@@ -1,8 +1,8 @@
 --- 
 title: "10 Fundamental Theorems for Econometrics"
 author: "Thomas S. Robinson \\ (https://ts-robinson.com)"
-date: "`r Sys.Date() ` -- v0.1"
-version: 0.1
+date: "`r Sys.Date() ` -- v0.1.2"
+version: 0.1.2
 site: bookdown::bookdown_site
 output: 
   bookdown::pdf_book:
@@ -27,7 +27,7 @@ description: "This book walks through the ten most important statistical theorem
 knitr::include_graphics('images/slider_bg2.png', auto_pdf = TRUE)
 ```
 
-A [list of 10 econometric theorems](https://twitter.com/causalinf/status/1259448663270658050) was circulated on Twitter citing what Jeffrey Wooldridge claims you just need to apply repeatedly in order to do econometrics. As a political scientist with applied statistics training, this list caught my attention because it contains many of the theorems I see used in (methods) papers, but which I typically glaze over for lack of understanding. The complete list (slightly paraphrased) is:
+A [list of 10 econometric theorems](https://twitter.com/causalinf/status/1259448663270658050) was circulated on Twitter citing what Jeffrey Wooldridge claims you need to apply repeatedly in order to do econometrics. As a political scientist with applied statistics training, this list caught my attention because it contains many of the theorems I see used in (methods) papers, but which I typically glaze over for lack of understanding. The complete list (slightly paraphrased) is:
 
 1. Law of Iterated Expectations, Law of Total Variance
 2. Linearity of Expectations, Variance of a Sum
@@ -63,6 +63,10 @@ I worked through these proofs learning the bits of maths I needed as I went alon
 * Where relevant, I provide coded examples in R. I've kept my use of packages to a minimum so the code should be reasonably easy to read/port to other programming languages.
 
 ### Version notes {-}
+
+**v0.1.1**
+
+Minor changes thanks to Anirban Mitra and Xiaowei Zhang!
 
 **v0.1**
 
