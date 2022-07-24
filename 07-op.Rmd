@@ -2,12 +2,12 @@
 
 ## Stochastic order notation
 
-**"Big Op"** (*big oh-pee*), or in algebraic terms $O_p$, is a shorthand means of characterising the convergence in probability of a set of random variables. It directly builds on the same sort of convergence ideas that were discussed in Chapters [5](#wlln) and [6](#slutsky).
+**"Big Op"** (*big oh-pee*), or in algebraic terms $O_p$, is a shorthand means of characterising the convergence in probability of a set of random variables. It directly builds on the same sort of convergence ideas that were discussed in Chapters [4](#wlln) and [5](#slutsky).
 
 Big Op means that some given random variable is stochastically bounded. If we have some random variable $X_n$ and some constant $a_n$ (where n indexes both sets), then 
 
 $$ X_n = O_p(a_n)$$ is the same as saying that $$ P(|\frac{X_n}{a_n}| > \delta) < \epsilon, \forall n > N. $$
-$M \text{ and } N$ here are just finite numbers, and $\epsilon$ is some arbitrary (small) number. In plain English, $O_p$ means that for a large enough $n$ there is some number ($M$) such that the probability that the random variable $\frac{X_n}{a_n}$ is larger than that number is essentially zero. It is "bounded in probability" [@vaart_1998, Section 2.2].
+$\delta \text{ and } N$ here are just finite numbers, and $\epsilon$ is some arbitrary (small) number. In plain English, $O_p$ means that for a large enough $n$ there is some number ($\delta$) such that the probability that the random variable $\frac{X_n}{a_n}$ is larger than that number is essentially zero. It is "bounded in probability" [@vaart_1998, Section 2.2].
 
 **"Little op"** (*litle oh-pee*), or $o_p$, refers to convergence in probability towards zero. $X_n = o_p(1)$ is the same as saying
 
