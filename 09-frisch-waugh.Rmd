@@ -4,7 +4,7 @@
 
 The Frisch-Waugh-Lovell Theorem (FWL; after the initial proof by @frisch1933partial, and later generalisation by @lovell1963seasonal) states that:
 
-Any predictor's regression coefficient in a multivariate model is equivalent to the regression coefficient estimated from a bivariate model in which the residualised outcome is regressed on the residualised component of the predictor; where the residuals are taken from models regressing the outcome *and* the predictor on all other predictors in the multivariate regression (separately).
+Any predictor's regression coefficient in a multivariate model is equivalent to the regression coefficient estimated from a bivariate model in which the residualised outcome is regressed on the residualised component of the predictor; where the residuals are taken from models regressing the outcome *and* the predictor on all other predictors in the multiva   riate regression (separately).
 
 More formally, assume we have a multivariate regression model with $k$ predictors:
 
@@ -193,23 +193,104 @@ Since $cov(A,A) = var(A)$ and therefore:
 
 Frisch-Waugh is so useful because it simplifies a multivariate equation into a bivariate one. While computationally this makes zero difference (unlike in the days of hand computation), here it allows us to use a convenient expression of the bivariate coefficient to show and quantify the bias when you run a regression in the presence of an unobserved confounder. Moreover, note that in Equation \ref{eq:cov_expand}, we implicitly use FWL again since we know that the non-stochastic aspect of Y not explained by X are the residualised components of the full Equation \ref{eq:ch_full}.
 
-### Regressing the partialled-out X on the full Y
+## Regressing the partialled-out X on the full Y
 
-In *Mostly Harmless Econometrics* (MHE; @AngristMostlyHarmlessEconometrics2009), the authors note that you also get an identical coefficient to the full regression if you regress the residualised predictor on the non-residualised $Y$. We can use the OVB framework above to explain this case.
+Finally, in *Mostly Harmless Econometrics* (MHE; @AngristMostlyHarmlessEconometrics2009), the authors note that you also get an identical coefficient to the full regression if you regress the residualised *predictor* on the non-residualised outcome. Notice this is different from standard FWL where you also residualise the outcome before estimating regression coefficients.
 
-Let's take the full regression model as:
+This feature is interesting, not least because it reduces the number of steps one has to do in order to manually estimate the coefficients! To see why this claim holds, we can use a similar strategy to the OVB example above.
 
-\begin{equation}
-Y = \hat{\beta}_1X_1 + \hat{\beta}_2X_2 + \hat{\epsilon}.    
-\end{equation}
-
-\textit{MHE} states that:
+Let's consider the full regression model to be:
 
 \begin{equation}
-    Y = \hat{\beta_1}M_2X_1 + \hat{\epsilon}.
+Y = \beta_1X_1 + \beta_2X_2 + \epsilon.    
 \end{equation}
 
-Note that this is just FWL, except we have not also residualised $Y$. Our aim is to check whether there is any bias in the estimated coefficient from this second equation. As before, since this is a bivariate regression we can express the coefficient as:
+and the model where only $X_1$ is residualised as:
+
+\begin{equation}
+    Y = \beta^*_1M_2X_1 + \epsilon.
+\end{equation}
+
+We want to show that $\beta_1 = \beta^*_1.\footnote{At the end of this section, I briefly discuss how this generalises to the cases with more than two predictor variables.}
+
+We can start by expressing the coefficient from the residualised equation as follows:
+
+\begin{equation}
+\beta^*_1 = \frac{cov(Y, M_2X_1)}{var(M_2X_1)} \\
+\end{equation}
+
+Next we can substitute $Y$ with the righthand side of the full regress model above. We then apply covariance rules to move the scalar $beta$ values outside of the covariances, and split the fraction into simpler parts:
+
+\begin{align}
+    \begin{aligned}
+      \beta^*_1 &= \frac{cov(\beta_1X_1 + \beta_2X_2 + \epsilon, M_2X_1)}{var(M_2X_1)} \\
+      &= \beta_1\frac{cov(X_1, M_2X_1)}{var(M_2X_1)} + \beta_2\frac{cov(X_2, M_2X_1)}{var(M_2X_1)} + \frac{cov(\epsilon, M_2X_1)}{var(M_2X_1)} \\
+    \end{aligned}
+\end{align}
+
+Notice that, by definition, $\epsilon$ is the component of the outcome that is unexplained by both $X_1$ and $X_2$, therefore its covariance with the residualised component of $X_1$ will be zero. Likewise, $M_2X_1$ is that part of $X_1$ that is unrelated to $X_2$, and so similarly $cov(X_2,M_2X_1)=0$. Hence, the last two terms above drop out of the equation:
+
+\begin{align}
+    \begin{aligned}
+      \beta^*_1 &= \beta_1\frac{cov(X_1, M_2X_1)}{var(M_2X_1)} + \beta_2\frac{0}{var(M_2X_1)} + \frac{cov(\epsilon, M_2X_1)}{var(M_2X_1)} \\
+      &= \beta_1\frac{0}{var(M_2X_1)}
+    \end{aligned}
+\end{align}
+
+Now, it should be clear that to reach the end of the proof the remaining fraction needs to equal 1. Consequently, therefore, $cov(X_1, M_2X_1) = var(M_2X_1)$. I don't find this equality intuitive at all. Hence, let's briefly prove it as a lemma:
+
+Let's define the covariance of $X_1$ and $M_2X_1$ in terms of expectations, and then rearrange the terms (this is the standard rearrangement in many textbooks/online resources):
+\begin{align}
+\begin{aligned}
+  cov(X_1, M_2X_1) &= E[(X_1-E[X_1])(M_2X_1 - E[M_2X_1])] \\
+  &= E[X_1'M_2X_1] - E[X_1]E[M_2X_1]
+\end{aligned}
+\end{align}
+
+One feature of the residual maker $M$ is that it is idempotent, i.e. that $M'M = M$ (this is also true of the projection matrix $P$). So we can change the first term by substituting in this equivalence, and then rearranging using some basic linear algebra:
+\begin{align}
+\begin{aligned}
+cov(X_1, M_2X_1) &= E[X_1'M_2'M_2X_1] - E[X_1]E[M_2X_1] \\
+&=E[(M_2X_1)'(M_2X_1)] - E[X_1]E[M_2X_1]
+\end{aligned}
+\end{align}
+
+Now we get to the crux of proving this lemma. Notice that since $M_2X_1$ are the residuals of regressing $X_1$ on $X_2$, we know by definition that the mean of these residuals will be zero. Hence:
+\begin{equation}
+cov(X_1, M_2X_1) = E[(M_2X_1)'(M_2X_1)] - E[X_1] \times 0 = E[(M_2X_1)'(M_2X_1)].
+\end{equation}
+
+We can perform a very similar trick with respect to the variance of the residuals:
+\begin{align}
+\begin{aligned}
+var(M_2X_1) &= E[(M_2X_1)^2] - E[(M_2X_1)]^2 \\
+&= var(M_2X_1) = E[(M_2X_1)^2] \\
+&= E[(M_2X_1)'(M_2X_1)] = cov(X_1,M_2X_1) \ \ \whitesquare
+\end{align}
+\end{aligned}
+
+Notice we start with the formal definition of variance, and can immediately drop the second term as we know the mean is zero so the squared mean is also zero.\footnote{Importantly, the mean of the square is not zero!} Finally, with a small rearrangement, we arrive at the equivalence.
+
+With that in hand, let's go back to the MHE proof knowing that $cov(X_1, M_2X_1) = var(M_2X_1)$. Therefore:
+\begin{equation}
+\beta^*_1 = \beta_1\frac{var(M_2X_1)}{var(M_2X_1)} = \beta_1 \times 1 = \beta_1 \ \  \blacksquare
+\end{equation}
+
+And we're done! We arrive at the same $\beta_1$ coefficient, despite only residualising the predictor. Notice also that this proof generalises to including more independent variables. Rather than $M_2$ we can think about $M$ as being the residual maker regressing $X_1$ on $k$ other independent variables. Given that the residual maker will mean that any specific covariance term (i.e. $\beta_kcov(X_k, MX_1)$) will be zero, once we expand $cov(Y,MX_1)$ with the full linear equation, all of these additional terms will fall away. As an exercise, it may be worth trying the above proof with four or five independent variables to see this in action.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \begin{align}
     \begin{aligned}

@@ -1,8 +1,8 @@
 --- 
 title: "10 Fundamental Theorems for Econometrics"
 author: "Thomas S. Robinson \\ (https://ts-robinson.com)"
-date: "`r Sys.Date() ` -- v0.1.2"
-version: 0.1.2
+date: "`r Sys.Date() ` -- v0.1.3"
+version: 0.1.3
 site: bookdown::bookdown_site
 output: 
   bookdown::pdf_book:
@@ -46,7 +46,7 @@ I found for a list of important theorems there were few consistent sources that 
 
 This resource is an attempt to collate my writing on these theorems -- the intuitions, proofs, and examples -- into a single document. I have taken some liberties in doing so -- for instance combining Wooldridge's first two points into a single chapter on 'Expectation Theorems', and often omit continuous proofs where discrete proofs are similar and easier to follow. That said, I have tried to be reasonably exhaustive in my proofs so that they are accessible to those (like me) without a formal statistics background.
 
-The inspiration for this project was Jeffrey Wooldridge's list, an academic whose work I admire greatly. This document, however, is in no way endorsed by or associated with him. Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably still be some errors, omissions, and confusing passages. I would be more than grateful to receive any feedback at <thomas.robinson@durham.ac.uk> or via the [GitHub repo for this project](https://github.com/tsrobinson/10EconometricTheorems).
+The inspiration for this project was Jeffrey Wooldridge's list, an academic whose work I admire greatly. This document, however, is in no way endorsed by or associated with him. Most of the applied examples (and invisible corrections to my maths) stem from discussions with Andy Eggers and Musashi Harukawa. There will inevitably still be some errors, omissions, and confusing passages. I would be more than grateful to receive any feedback at <t.robinson7@lse.ac.uk> or via the [GitHub repo for this project](https://github.com/tsrobinson/10EconometricTheorems).
 
 
 
@@ -63,6 +63,10 @@ I worked through these proofs learning the bits of maths I needed as I went alon
 * Where relevant, I provide coded examples in R. I've kept my use of packages to a minimum so the code should be reasonably easy to read/port to other programming languages.
 
 ### Version notes {-}
+
+**v0.1.3**
+
+Minor changes thanks to Krisztián Boros and Ahmed Ali!
 
 **v0.1.1**
 
