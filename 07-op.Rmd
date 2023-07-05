@@ -27,14 +27,14 @@ In other words, $X_n = o_p(a_n)$ if and only if $\frac{X_n}{a_n} \xrightarrow{p}
 $O_p$ and $o_p$ may seem quite similar, and that's because they are! Another way to express $X_n = O_p(a_n)$, is
 
 $$\forall \epsilon\;\; \exists N_\epsilon,\delta_\epsilon \;\; s.t. \forall n > N_\epsilon,\;\; P(|\frac{X_n}{a_n}| \geq \delta_\epsilon) \leq \epsilon.$$
-This restatement makes it clear that the values of $\delta$ and $N$ are to be found with respect to $\epsilon$. That is, we only have to find one value of $N$ and $\delta$ for each $epsilon$, and these can differ across $\epsilon$'s. 
+This restatement makes it clear that the values of $\delta$ and $N$ are to be found with respect to $\epsilon$. That is, we only have to find one value of $N$ and $\delta$ for each $\epsilon$, and these can differ across $\epsilon$'s. 
 
 Using the same notation, $X_n = o_p(a_n)$ can be expressed as
 
 $$\forall \epsilon,\delta\;\; \exists N_{\epsilon,\delta} \;\; s.t. \forall n > N_{\epsilon,\delta},\;\; P(|\frac{X_n}{a_n}| \geq \delta) \leq \epsilon.$$
 $o_p$ is therefore a more general statement, ranging over all values of $\epsilon$ *and* $\delta$, and hence any combination of those two values. In other words, for any given pair of values for $\epsilon$ and $\delta$ there must be some $N$ that satisfies the above inequality (assuming $X_n = o_p(a_n)$). 
 
-Note also, therefore that $o_p(a_n)$ entails $O_p(a_n)$, but that the inverse is not true. If for all $\epsilon$ and $\delta$ there is some $N_{\epsilon,\delta}$ that satisfies the inequality, then it must be the case that for all $\epsilon$ there exists some $\delta$ such that the inequality also holds. But just because for some $\delta_\epsilon$ the inequality holds, this does not mean that it will hold for *all* $\delta$.
+Note also, therefore that $o_p(a_n)$ entails $O_p(a_n)$, but that the converse is not true. If for all $\epsilon$ and $\delta$ there is some $N_{\epsilon,\delta}$ that satisfies the inequality, then it must be the case that for all $\epsilon$ there exists some $\delta$ such that the inequality also holds. But just because for some $\delta_\epsilon$ the inequality holds, this does not mean that it will hold for *all* $\delta$.
 
 ## Notational shorthand and ``arithmetic" properties
 
