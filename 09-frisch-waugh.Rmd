@@ -9,10 +9,10 @@ Any predictor's regression coefficient in a multivariate model is equivalent to 
 More formally, assume we have a multivariate regression model with $k$ predictors:
 
 \begin{equation}
-\hat{y} = \hat{\beta}_{1}x_{1} + ... \hat{\beta}_{k}x_{k} + \epsilon. \label{eq:multi}
+\hat{y} = \hat{\beta}_{1}x_{1} + ... \hat{\beta}_{k}x_{k} + \epsilon. (\#eq:multi)
 \end{equation}
 
-FWL states that every $\hat{\beta}_{j}$ in Equation \ref{eq:multi} is equal to $\hat{\beta}^{*}_{j}$, \textit{and} the residual $\epsilon = \epsilon^{*}$ in:
+FWL states that every $\hat{\beta}_{j}$ in Equation \@ref{eq:multi} is equal to $\hat{\beta}^{*}_{j}$, \textit{and} the residual $\epsilon = \epsilon^{*}$ in:
 
 \begin{equation}
      \epsilon^{y} = \hat{\beta}^{*}_{j}\epsilon^{x_j} + \epsilon^{*} 
