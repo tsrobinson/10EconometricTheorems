@@ -2,7 +2,7 @@
 
 ## Theorem in plain English {#theorem_slutsky}
 
-Slutsky's Theorem allows us to make claims about the convergence of random variables. It states that a random variable converging to some distribution $X$, when multiplied by a variable converging in probability on some constant $a$, converges in distribution to $a \times X$. Similarly, if you add the two random variables, they converge in distribution to $a$ plus $X$. More formally, the theorem states that if $X_n \xrightarrow{d} X$ and $A_n \xrightarrow{p}$, where $a$ is a constant, then: 
+Slutsky's Theorem allows us to make claims about the convergence of random variables. It states that a random variable converging to some distribution $X$, when multiplied by a variable converging in probability on some constant $a$, converges in distribution to $a \times X$. Similarly, if you add the two random variables, they converge in distribution to $a$ plus $X$. More formally, the theorem states that if $X_n \xrightarrow{d} X$ and $A_n \xrightarrow{p} a$, where $a$ is a constant, then: 
 
 1. $X_n + A_n  \xrightarrow{d} X + a$
 2. $A_nX_n \xrightarrow{d} aX$
