@@ -62,8 +62,8 @@ LTV can be proved almost immediately using LIE and the definition of variance:
 \begin{align}
     var(Y) &= \mathbb{E}[Y^2] - \mathbb{E}[Y]^2 \label{eq:var_def} \\ 
            &= \mathbb{E}[\mathbb{E}[Y^2|X]] - \mathbb{E}[\mathbb{E}[Y|X]]^2 \label{eq:var_lie} \\ 
-           &= \mathbb{E}[var[Y|X] + \mathbb{E}[Y]^2]] - \mathbb{E}[\mathbb{E}[Y|X]]^2 \label{eq:var_by10}\\
-           &= \mathbb{E}[var[Y|X]] + (\mathbb{E}[\mathbb{E}[Y]^2] - \mathbb{E}[\mathbb{E}[Y|X]]^2) \label{eq:var_eshift}\\
+           &= \mathbb{E}[var[Y|X] + \mathbb{E}[Y|X]^2] - \mathbb{E}[\mathbb{E}[Y|X]]^2 \label{eq:var_by10}\\
+           &= \mathbb{E}[var[Y|X]] + (\mathbb{E}[\mathbb{E}[Y|X]^2] - \mathbb{E}[\mathbb{E}[Y|X]]^2) \label{eq:var_eshift}\\
            &= \mathbb{E}[var[Y|X]] + var(\mathbb{E}[Y|X]) \label{eq:var_by10_2} \; \; \; \square
 \end{align}
 
