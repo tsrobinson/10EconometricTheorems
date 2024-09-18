@@ -141,7 +141,7 @@ One final piece of characteristic function math that will help finalise the CLT 
 
 This proof is based in part on Ben Lambert's excellent [YouTube series](https://www.youtube.com/channel/UC3tFZR3eL1bDY8CqZDOQh-w), as well as @Lemons_Langevin_Gythiel_2002.
 
-Given the above discussion of a characteristic function, let us assume a sequence of independent and identically distributed (i.i.d.) random variables ${X_1, X_2, ..., X_n}$, each with mean $\mu$ and finite\footnote{Hence why degenerate distributions like the Cauchy are not covered by CLT.} variance $\sigma^2$. The sum of these random variables has mean $n\mu$ (since each random variable has the same mean) and the variance equivalent to $n\sigma^2$ (because the random variables are i.i.d. we know that $var(A,B) = var(A)var(B)$).
+Given the above discussion of a characteristic function, let us assume a sequence of independent and identically distributed (i.i.d.) random variables ${X_1, X_2, ..., X_n}$, each with mean $\mu$ and finite\footnote{Hence why degenerate distributions like the Cauchy are not covered by CLT.} variance $\sigma^2$. The sum of these random variables has mean $n\mu$ (since each random variable has the same mean) and the variance equivalent to $n\sigma^2$ (because the random variables are i.i.d. we know that $var(A+B) = var(A)+var(B)$).
 
 Now let's consider the standardized difference between the actual sum of the random variables and the mean. Standardization simply means dividing a parameter estimate by its standard deviation. In particular, we can consider the following standardized random variable:
 
