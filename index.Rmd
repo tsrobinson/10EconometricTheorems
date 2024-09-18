@@ -66,7 +66,7 @@ I worked through these proofs learning the bits of maths I needed as I went alon
 
 **v0.1.4**
 
-Minor changes thanks to \@illiapolovnikov!
+Minor changes/corrections thanks to \@illiapolovnikov and @mortimerliu!
 
 **v0.1.3**
 
