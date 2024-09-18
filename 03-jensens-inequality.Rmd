@@ -11,7 +11,7 @@ Jensen's Inequality is a statement about the relative size of the expectation of
 A function $f$ is convex (in two dimensions) if all points on a straight line connecting any two points on the graph of $f$ is above or on that graph.  More formally, $f$ is convex if for $\forall x_1, x_2 \in \mathbb{R}$, and $\forall t \in [0,1]$:
 
 $$
-    f(tx_1, (1-t)x_2) \leq tf(x_1) + (1-t)f(x_2).
+    f(tx_1 + (1-t)x_2) \leq tf(x_1) + (1-t)f(x_2).
 $$
 
 Here, $t$ is a weighting parameter that allows us to range over the full interval between points $x_1$ and $x_2$.
