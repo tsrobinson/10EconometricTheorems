@@ -266,8 +266,9 @@ We can perform a very similar trick with respect to the variance of the residual
 var(M_2X_1) &= E[(M_2X_1)^2] - E[(M_2X_1)]^2 \\
 &= var(M_2X_1) = E[(M_2X_1)^2] \\
 &= E[(M_2X_1)'(M_2X_1)] = cov(X_1,M_2X_1) \ \ \whitesquare
-\end{align}
 \end{aligned}
+\end{align}
+
 
 Notice we start with the formal definition of variance, and can immediately drop the second term as we know the mean is zero so the squared mean is also zero.\footnote{Importantly, the mean of the square is not zero!} Finally, with a small rearrangement, we arrive at the equivalence.
 
