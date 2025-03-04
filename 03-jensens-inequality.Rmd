@@ -92,8 +92,8 @@ The bias in the estimate of the sample mean's standard error originates from the
 $$
 \begin{aligned}
 \mathbb{E}\left[\hat{\sigma}\right] = \mathbb{E}\left[\sqrt{\hat{V}(\bar{X})}\right] &< \sqrt{\mathbb{E}[\hat{V}(\bar{X})]} \;\;\; \text{(by Jensen's Inequality)}\\
-& < \sqrt{V(\bar{X})} \;\;\; \text{(since the sampling variance is unbiased)} \\
-& < \sigma. \;\;\; \square
+& = \sqrt{V(\bar{X})} \;\;\; \text{(since the sampling variance is unbiased)} \\
+& = \sigma. \;\;\; \square
 \end{aligned}
 $$
 
